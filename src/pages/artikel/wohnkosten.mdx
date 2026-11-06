@@ -1,0 +1,128 @@
+---
+layout: ../../layouts/ArtikelLayout.astro
+titel: Wie viel vom Einkommen für das Wohnen ausgegeben wird
+beschreibung: Der Anteil der Wohnkosten am verfügbaren Einkommen der Haushalte in Deutschland – nach der Haushaltsbefragung EU-SILC seit 2005, aufgeteilt nach armutsgefährdeten und nicht armutsgefährdeten Haushalten, und nach der Volkswirtschaftlichen Gesamtrechnung seit 1995.
+kategorien: [Wohnen]
+datum: 2026-11-06
+---
+import Diagramm from '../../components/Diagramm.astro';
+import anteil from '../../data/wohnkosten-anteil-einkommen.json';
+import vgr from '../../data/wohnausgaben-vgr.json';
+
+Wie groß der Teil des Einkommens ist, der für das Wohnen ausgegeben wird,
+lässt sich auf zwei Wegen messen: durch die Befragung von Haushalten oder
+über die Summen der Volkswirtschaftlichen Gesamtrechnung. Beide Wege
+grenzen Wohnkosten und Einkommen unterschiedlich ab und kommen deshalb zu
+unterschiedlichen Ergebnissen. Dieser Artikel zeigt beide.
+
+## Wohnkosten der Haushalte laut Befragung
+
+Das erste Diagramm zeigt den durchschnittlichen Anteil der Wohnkosten am
+verfügbaren Haushaltseinkommen in Prozent, Deutschland, 2005–2025. Grundlage
+ist die europaweit einheitliche Erhebung über Einkommen und
+Lebensbedingungen (EU-SILC), die das Statistische Bundesamt für Deutschland
+durchführt und Eurostat veröffentlicht.
+
+- **Wohnkosten:** bei Mieterinnen und Mietern die Miete einschließlich
+  Nebenkosten, bei Eigentümerinnen und Eigentümern die Zinsen für
+  Immobilienkredite (ohne Tilgung) und die Nebenkosten; in beiden Fällen
+  zusätzlich Heizung, Strom, Wasser und regelmäßige Instandhaltung.
+- **Verfügbares Haushaltseinkommen:** alle Einkommen des Haushalts nach
+  Steuern und Sozialabgaben, einschließlich Renten und Sozialleistungen.
+  Wohngeld und ähnliche Zuschüsse sind sowohl von den Wohnkosten als auch
+  vom Einkommen abgezogen.
+- **Armutsgefährdete Haushalte:** Haushalte, deren nach Haushaltsgröße
+  gewichtetes Einkommen unter 60 Prozent des mittleren Einkommens (Median)
+  in Deutschland liegt.
+
+Das Einkommen bezieht sich jeweils auf das Vorjahr der Befragung. Bis 2019
+war die Teilnahme freiwillig; seit 2020 ist die Erhebung Teil des
+Mikrozensus mit Auskunftspflicht und einer deutlich größeren Stichprobe.
+Das Statistische Bundesamt weist darauf hin, dass die Ergebnisse ab 2020
+deshalb nicht mit den Vorjahren vergleichbar sind (Markierung 1). Auch
+zwischen 2005 und 2006 sowie zwischen 2009 und 2010 ändern sich die Werte
+sprunghaft; die Quelle kennzeichnet diese Jahre nicht als Zeitreihenbruch.
+
+<Diagramm
+  typ="linie"
+  daten={anteil}
+  x="jahr"
+  y="wert"
+  serie="gruppe"
+  serienFarben={{
+    'Alle Haushalte': 'schwarz',
+    'Armutsgefährdete Haushalte': 'rot',
+    'Nicht armutsgefährdete Haushalte': 'gold',
+  }}
+  einheit="%"
+  titel="Anteil der Wohnkosten am verfügbaren Haushaltseinkommen"
+  untertitel="Durchschnitt in Prozent, Deutschland, Erhebungsjahre 2005–2025"
+  quelle="Eurostat, Datensatz ilc_mded01, Erhebung EU-SILC (Stand 20. Oktober 2026)"
+  quelleUrl="https://ec.europa.eu/eurostat/databrowser/view/ilc_mded01/default/table?lang=de"
+  abgerufen="2026-11-06"
+  ereignisse={[
+    {
+      x: 2020,
+      text: 'Ab 2020 ist EU-SILC Teil des Mikrozensus; die Ergebnisse sind laut Statistischem Bundesamt nicht mit den Vorjahren vergleichbar.',
+      quelle: 'Statistisches Bundesamt, EU-SILC – Methoden',
+      quelleUrl: 'https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Einkommen-Konsum-Lebensbedingungen/Lebensbedingungen-Armutsgefaehrdung/Methoden/EU-SILC.html',
+      abgerufen: '2026-11-06',
+    },
+  ]}
+/>
+
+## Ausgaben für das Wohnen in der Volkswirtschaftlichen Gesamtrechnung
+
+Das zweite Diagramm zeigt die Konsumausgaben aller privaten Haushalte für
+das Wohnen im Verhältnis zu ihrem gesamten verfügbaren Einkommen in
+Prozent, Deutschland, 1995–2022, aufgeteilt nach Ausgabenarten. Die Anteile
+sind selbst berechnet: Ausgaben der jeweiligen Art geteilt durch das
+verfügbare Einkommen, beides in jeweiligen Preisen. Jüngere Jahre weist
+Eurostat für diese Aufteilung bisher nicht aus.
+
+- **Gezahlte Mieten:** Nettokaltmieten, die Mieterhaushalte tatsächlich
+  zahlen.
+- **Unterstellte Mieten:** Die Volkswirtschaftliche Gesamtrechnung behandelt
+  selbst genutzte Wohnungen und Häuser so, als würden die Eigentümer sie an
+  sich selbst vermieten, und setzt dafür die ortsübliche Miete an. Dieser
+  Betrag wird nicht tatsächlich gezahlt; Zinsen und Tilgung für
+  Immobilienkredite sind dagegen nicht enthalten.
+- **Strom, Gas und andere Brennstoffe:** einschließlich Heizöl und
+  Fernwärme.
+- **Wasser, Müllabfuhr, Instandhaltung u. a.:** Wasserversorgung,
+  Abwasser- und Müllgebühren, sonstige Dienstleistungen rund um die Wohnung
+  sowie kleinere Reparaturen durch Mieter und Eigentümer.
+- **Verfügbares Einkommen:** Einkommen aller privaten Haushalte
+  einschließlich privater Organisationen ohne Erwerbszweck nach Steuern und
+  Sozialabgaben, einschließlich empfangener Sozialleistungen, vor Abzug von
+  Abschreibungen.
+
+Anders als im ersten Diagramm handelt es sich um das Verhältnis zweier
+Gesamtsummen für alle Haushalte, nicht um den Durchschnitt der Anteile
+einzelner Haushalte. Haushalte mit hohem Einkommen gehen dadurch stärker in
+das Ergebnis ein.
+
+<Diagramm
+  typ="balken-gestapelt"
+  daten={vgr}
+  x="jahr"
+  y="wert"
+  serie="bereich"
+  serienFarben={{
+    'Gezahlte Mieten': '#c0392b',
+    'Unterstellte Mieten selbst genutzten Wohneigentums': '#e6a800',
+    'Strom, Gas und andere Brennstoffe': '#1f4e79',
+    'Wasser, Müllabfuhr, Instandhaltung u. a.': '#8a8a8a',
+  }}
+  einheit="%"
+  titel="Konsumausgaben der privaten Haushalte für das Wohnen"
+  untertitel="In Prozent des verfügbaren Einkommens der privaten Haushalte, Deutschland, 1995–2022, eigene Berechnung"
+  quelle="Eurostat, Datensätze nama_10_co3_p3 (Konsumausgaben nach Verwendungszweck, Stand 21. Oktober 2026) und nasa_10_nf_tr (verfügbares Einkommen, Sektor private Haushalte und private Organisationen ohne Erwerbszweck, Stand 29. Oktober 2026), eigene Berechnung"
+  quelleUrl="https://ec.europa.eu/eurostat/databrowser/view/nama_10_co3_p3/default/table?lang=de"
+  abgerufen="2026-11-06"
+/>
+
+Die Werte zum verfügbaren Einkommen stammen aus dem Eurostat-Datensatz
+[nasa_10_nf_tr](https://ec.europa.eu/eurostat/databrowser/view/nasa_10_nf_tr/default/table?lang=de)
+(abgerufen am 6. November 2026). Eurostat übernimmt die Zahlen beider
+Diagramme vom [Statistischen Bundesamt](https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Einkommen-Konsum-Lebensbedingungen/Lebensbedingungen-Armutsgefaehrdung/_inhalt.html).
