@@ -1,0 +1,224 @@
+---
+/**
+ * Volltextsuche über alle Artikel mit Pagefind.
+ * Der Index entsteht erst beim Build (`npm run build`) in dist/pagefind/ –
+ * im Dev-Server (`npm run dev`) zeigt das Feld deshalb nur einen Hinweis.
+ */
+const basis = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
+---
+
+<div class="suche" data-basis={basis}>
+  <label for="suchfeld" class="unsichtbar">Artikel durchsuchen</label>
+  <input
+    id="suchfeld"
+    type="search"
+    placeholder="Artikel durchsuchen …"
+    autocomplete="off"
+    spellcheck="false"
+    aria-controls="suchergebnisse"
+  />
+  <div id="suchergebnisse" class="ergebnisse" hidden aria-live="polite"></div>
+</div>
+
+<script>
+  type Treffer = {
+    url: string;
+    excerpt: string;
+    meta: { title?: string; kategorie?: string; datum?: string };
+  };
+  type Pagefind = {
+    options: (o: Record<string, unknown>) => Promise<void>;
+    debouncedSearch: (
+      begriff: string,
+      o?: Record<string, unknown>,
+      ms?: number,
+    ) => Promise<{ results: { data: () => Promise<Treffer> }[] } | null>;
+  };
+
+  const wurzel = document.querySelector<HTMLElement>('.suche')!;
+  const feld = wurzel.querySelector<HTMLInputElement>('#suchfeld')!;
+  const ausgabe = wurzel.querySelector<HTMLElement>('#suchergebnisse')!;
+  const basis = wurzel.dataset.basis!;
+
+  let pagefind: Promise<Pagefind | null> | undefined;
+
+  // Pagefind erst beim ersten Fokus laden, damit Seiten ohne Suche nichts nachladen
+  function ladePagefind() {
+    pagefind ??= import(/* @vite-ignore */ `${basis}pagefind/pagefind.js`)
+      .then(async (pf: Pagefind) => {
+        await pf.options({ baseUrl: basis, excerptLength: 20 });
+        return pf;
+      })
+      .catch(() => null);
+    return pagefind;
+  }
+
+  function zeige(html: string) {
+    ausgabe.innerHTML = html;
+    ausgabe.hidden = false;
+  }
+
+  function schliesse() {
+    ausgabe.hidden = true;
+  }
+
+  const escape = (s = '') =>
+    s.replace(/[&<>"']/g, (z) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[z]!);
+
+  async function suche() {
+    const begriff = feld.value.trim();
+    if (!begriff) return schliesse();
+
+    const pf = await ladePagefind();
+    if (!pf) {
+      return zeige('<p class="hinweis">Die Suche steht erst nach dem Build zur Verfügung.</p>');
+    }
+
+    const antwort = await pf.debouncedSearch(begriff, {}, 250);
+    if (antwort === null) return; // von einer neueren Eingabe abgelöst
+
+    if (antwort.results.length === 0) {
+      return zeige(`<p class="hinweis">Keine Treffer für „${escape(begriff)}“.</p>`);
+    }
+
+    const treffer = await Promise.all(antwort.results.slice(0, 8).map((r) => r.data()));
+    const anzahl = antwort.results.length;
+    // excerpt stammt von Pagefind: Inhalt ist bereits maskiert, nur <mark> ist enthalten
+    zeige(
+      `<p class="hinweis">${anzahl > treffer.length ? `${treffer.length} von ${anzahl}` : anzahl} Treffer</p><ul>` +
+        treffer
+          .map((t) => {
+            const kat = escape(t.meta.kategorie);
+            return `<li class="kat-${kat.toLowerCase()}"><a href="${escape(t.url)}">
+              <span class="kategorie">${kat}</span>
+              <strong>${escape(t.meta.title)}</strong>
+              <span class="auszug">${t.excerpt}</span>
+            </a></li>`;
+          })
+          .join('') +
+        '</ul>',
+    );
+  }
+
+  feld.addEventListener('focus', () => {
+    ladePagefind();
+    if (feld.value.trim() && ausgabe.innerHTML) ausgabe.hidden = false;
+  });
+  feld.addEventListener('input', suche);
+
+  // Tastatur: Pfeiltasten wandern durch die Treffer, Escape schließt
+  wurzel.addEventListener('keydown', (e) => {
+    const links = [...ausgabe.querySelectorAll<HTMLAnchorElement>('a')];
+    const pos = links.indexOf(document.activeElement as HTMLAnchorElement);
+    if (e.key === 'Escape') {
+      schliesse();
+      feld.focus();
+    } else if (e.key === 'ArrowDown' && links.length) {
+      e.preventDefault();
+      links[Math.min(pos + 1, links.length - 1)].focus();
+    } else if (e.key === 'ArrowUp' && pos >= 0) {
+      e.preventDefault();
+      (pos === 0 ? feld : links[pos - 1]).focus();
+    }
+  });
+
+  // Klick außerhalb schließt die Trefferliste
+  document.addEventListener('click', (e) => {
+    if (!wurzel.contains(e.target as Node)) schliesse();
+  });
+
+  // Tastenkürzel „/“ springt ins Suchfeld
+  document.addEventListener('keydown', (e) => {
+    const ziel = e.target as HTMLElement;
+    if (e.key === '/' && !ziel.closest('input, textarea, [contenteditable]')) {
+      e.preventDefault();
+      feld.focus();
+    }
+  });
+</script>
+
+<style>
+  .suche {
+    position: relative;
+    width: 100%;
+  }
+  .unsichtbar {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  input {
+    width: 100%;
+    font: inherit;
+    font-size: 0.95rem;
+    padding: 0.55rem 0.8rem;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  input:focus {
+    outline: 2px solid var(--rot);
+    outline-offset: 1px;
+    border-color: transparent;
+  }
+  .ergebnisse {
+    position: absolute;
+    z-index: 10;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    max-height: min(70vh, 32rem);
+    overflow-y: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 0.12);
+  }
+  .ergebnisse :global(.hinweis) {
+    margin: 0;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .ergebnisse :global(ul) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .ergebnisse :global(li) {
+    border-top: 1px solid var(--border);
+    border-left: 4px solid var(--kat-bg);
+  }
+  .ergebnisse :global(a) {
+    display: block;
+    padding: 0.65rem 0.9rem;
+    text-decoration: none;
+  }
+  .ergebnisse :global(a:hover),
+  .ergebnisse :global(a:focus) {
+    background: var(--bg);
+    outline: none;
+  }
+  .ergebnisse :global(strong) {
+    display: block;
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    line-height: 1.3;
+    margin: 0.1rem 0 0.2rem;
+  }
+  .ergebnisse :global(.auszug) {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .ergebnisse :global(mark) {
+    background: var(--gold);
+    color: #000;
+    padding: 0 0.1em;
+    border-radius: 2px;
+  }
+</style>

@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { url } from '../lib/url';
+import Suche from '../components/Suche.astro';
 
 interface Props {
   title?: string;
@@ -24,8 +25,11 @@ const pageTitle = title ? `${title} · ${siteTitle}` : siteTitle;
   <body>
     <div class="flagge" aria-hidden="true"><span></span><span></span><span></span></div>
     <header class="container kopf">
-      <a href={url()} class="logo">{siteTitle}</a>
-      <p class="claim">Deutschland in Zahlen</p>
+      <div>
+        <a href={url()} class="logo">{siteTitle}</a>
+        <p class="claim">Deutschland in Zahlen</p>
+      </div>
+      <Suche />
     </header>
 
     <main class="container">
@@ -53,6 +57,8 @@ const pageTitle = title ? `${title} · ${siteTitle}` : siteTitle;
     padding-bottom: 2rem;
     border-bottom: 1px solid var(--border);
     margin-bottom: 2.5rem;
+    display: grid;
+    gap: 1.25rem;
   }
   .logo {
     font-family: var(--serif);

@@ -11,14 +11,15 @@ const datum = new Date(frontmatter.datum).toLocaleDateString('de-DE', {
 ---
 
 <BaseLayout title={frontmatter.titel} description={frontmatter.beschreibung}>
-  <article class={`kat-${frontmatter.kategorie.toLowerCase()}`}>
-    <span class="kategorie">{frontmatter.kategorie}</span>
-    <h1>{frontmatter.titel}</h1>
-    <p class="meta">{datum}</p>
+  <!-- data-pagefind-*: nur Artikel kommen in den Suchindex, Rubrik und Datum als Zusatzinfo -->
+  <article class={`kat-${frontmatter.kategorie.toLowerCase()}`} data-pagefind-body>
+    <span class="kategorie" data-pagefind-ignore data-pagefind-filter="kategorie" data-pagefind-meta="kategorie">{frontmatter.kategorie}</span>
+    <h1 data-pagefind-meta="title">{frontmatter.titel}</h1>
+    <p class="meta" data-pagefind-ignore><span data-pagefind-meta="datum">{datum}</span></p>
     <div class="inhalt">
       <slot />
     </div>
-    <p><a href={url()}>← Alle Artikel</a></p>
+    <p data-pagefind-ignore><a href={url()}>← Alle Artikel</a></p>
   </article>
 </BaseLayout>
 
