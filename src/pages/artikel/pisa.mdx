@@ -1,0 +1,118 @@
+---
+layout: ../../layouts/ArtikelLayout.astro
+titel: PISA-Ergebnisse in Deutschland, der Schweiz, den USA und China seit 2000
+beschreibung: Die durchschnittlichen Punktzahlen 15-jähriger Schülerinnen und Schüler in Mathematik, Lesen und Naturwissenschaften in allen PISA-Erhebungen von 2000 bis 2025 für Deutschland, die Schweiz, die USA und die chinesischen Provinzen Peking, Shanghai, Jiangsu und Zhejiang.
+kategorien: [Bildung]
+datum: 2026-11-06
+---
+import Diagramm from '../../components/Diagramm.astro';
+import pisa from '../../data/pisa.json';
+
+export const farben = {
+  'Deutschland': 'gold',
+  'Schweiz': 'rot',
+  'USA': '#1f4e79',
+  'China (B-S-J-Z)': 'schwarz',
+};
+export const fach = (f) => pisa.filter((d) => d.fach === f);
+
+Die PISA-Studie (Programme for International Student Assessment) der OECD misst
+seit 2000 die Kompetenzen 15-jähriger Schülerinnen und Schüler in Mathematik,
+Lesen und Naturwissenschaften. Sie findet in der Regel alle drei Jahre statt.
+Die für 2021 geplante Runde wurde wegen der Corona-Pandemie auf 2022 verschoben.
+Die Ergebnisse der jüngsten Erhebung von 2025 hat die OECD am 8. September 2026
+veröffentlicht.
+
+Die Diagramme zeigen die durchschnittliche Punktzahl je Land und Erhebung. Die
+PISA-Skala hat keinen natürlichen Nullpunkt. Sie wurde so festgelegt, dass der
+Durchschnitt der OECD-Länder im jeweils ersten Erhebungsjahr eines Fachs bei rund
+500 Punkten lag. Die y-Achse beginnt deshalb nicht bei null. Nach Angaben der
+OECD entsprechen etwa 20 Punkte ungefähr dem Lernfortschritt eines Schuljahres.
+
+## Mathematik
+
+Durchschnittliche Punktzahl in Mathematik von 2003 bis 2025. Die OECD
+vergleicht Mathematikergebnisse erst ab 2003, weil der Test damals neu
+ausgerichtet wurde.
+
+<Diagramm
+  typ="linie"
+  daten={fach('Mathematik')}
+  x="jahr"
+  y="wert"
+  serie="land"
+  serienFarben={farben}
+  yBereich={[450, 625]}
+  einheit="Punkte"
+  titel="PISA-Ergebnisse in Mathematik"
+  untertitel="Durchschnittliche Punktzahl 15-Jähriger, 2003–2025"
+  quelle="OECD, PISA 2025 Results (Volume I), Länderberichte, jeweils Abbildung 2"
+  quelleUrl="https://www.oecd.org/en/publications/2026/09/pisa-2025-results-volume-i-country-notes_88d1164e/germany_20677961.html"
+  abgerufen="2026-11-06"
+/>
+
+## Lesen
+
+Durchschnittliche Punktzahl im Lesen von 2000 bis 2025. Für die USA weist die
+OECD für 2006 keinen Lesewert aus.
+
+<Diagramm
+  typ="linie"
+  daten={fach('Lesen')}
+  x="jahr"
+  y="wert"
+  serie="land"
+  serienFarben={farben}
+  yBereich={[450, 625]}
+  einheit="Punkte"
+  titel="PISA-Ergebnisse im Lesen"
+  untertitel="Durchschnittliche Punktzahl 15-Jähriger, 2000–2025"
+  quelle="OECD, PISA 2025 Results (Volume I), Länderberichte, jeweils Abbildung 2"
+  quelleUrl="https://www.oecd.org/en/publications/2026/09/pisa-2025-results-volume-i-country-notes_88d1164e/germany_20677961.html"
+  abgerufen="2026-11-06"
+/>
+
+## Naturwissenschaften
+
+Durchschnittliche Punktzahl in den Naturwissenschaften von 2006 bis 2025. Die
+OECD vergleicht die Ergebnisse in diesem Fach erst ab 2006.
+
+<Diagramm
+  typ="linie"
+  daten={fach('Naturwissenschaften')}
+  x="jahr"
+  y="wert"
+  serie="land"
+  serienFarben={farben}
+  yBereich={[450, 625]}
+  einheit="Punkte"
+  titel="PISA-Ergebnisse in den Naturwissenschaften"
+  untertitel="Durchschnittliche Punktzahl 15-Jähriger, 2006–2025"
+  quelle="OECD, PISA 2025 Results (Volume I), Länderberichte, jeweils Abbildung 2"
+  quelleUrl="https://www.oecd.org/en/publications/2026/09/pisa-2025-results-volume-i-country-notes_88d1164e/germany_20677961.html"
+  abgerufen="2026-11-06"
+/>
+
+## Hinweise zu den Daten
+
+- **China:** Die Volksrepublik China nimmt nicht landesweit an PISA teil, sondern
+  nur mit einzelnen Provinzen und Städten. Gezeigt werden die Ergebnisse von
+  Peking, Shanghai, Jiangsu und Zhejiang (B-S-J-Z), die 2018 und 2025 in dieser
+  Zusammensetzung teilnahmen. An der Erhebung 2022 nahmen sie nicht teil.
+  2009 und 2012 nahm nur Shanghai teil, 2015 Peking, Shanghai, Jiangsu und
+  Guangdong. Diese Ergebnisse sind nicht enthalten, weil sie sich auf andere
+  Regionen beziehen und nicht mit den Werten von 2018 und 2025 vergleichbar sind.
+  Die vier Regionen gehören zu den wirtschaftlich stärksten des Landes und sind
+  nicht repräsentativ für ganz China.
+- **USA:** Laut OECD wurden in den USA 2025 mehrere Teilnahmestandards nicht
+  erfüllt, etwa bei der Beteiligung von Schulen und Schülern. Eine Verzerrung
+  der Ergebnisse lässt sich nach Angaben der OECD nicht ausschließen.
+- **Deutschland und Schweiz:** Die Daten erfüllten 2025 alle Qualitätsstandards
+  der OECD.
+
+Die Werte stammen aus den Länderberichten der OECD zu PISA 2025 für
+[Deutschland](https://www.oecd.org/en/publications/2026/09/pisa-2025-results-volume-i-country-notes_88d1164e/germany_20677961.html),
+die [Schweiz](https://www.oecd.org/en/publications/pisa-2025-results-volume-i-country-notes_2d4ff9ea-en/switzerland_3aa7a464-en.html),
+die [USA](https://www.oecd.org/en/publications/pisa-2025-results-volume-i-country-notes_2d4ff9ea-en/united-states_0c8cbc7c-en.html)
+und [B-S-J-Z (China)](https://www.oecd.org/en/publications/pisa-2025-results-volume-i-country-notes_2d4ff9ea-en/beijing-shanghai-jiangsu-and-zhejiang-b-s-j-z-china_d0c85572-en.html)
+(jeweils Abbildung 2, abgerufen am 6. November 2026).
