@@ -1,0 +1,75 @@
+---
+layout: ../../layouts/ArtikelLayout.astro
+titel: Staatsverschuldung und Bruttoinlandsprodukt seit 1995
+beschreibung: Schuldenstand des Staates und Bruttoinlandsprodukt in Deutschland von 1995 bis 2025 in Milliarden Euro, dazu die Ansprüche aus Beamtenversorgung und gesetzlicher Rentenversicherung.
+kategorien: [Staatsfinanzen, Wirtschaft, Rente, Öffentlicher Dienst]
+datum: 2026-11-06
+---
+import Diagramm from '../../components/Diagramm.astro';
+import daten from '../../data/staatsverschuldung.json';
+import alterssicherung from '../../data/staatsverschuldung-alterssicherung.json';
+
+Der Schuldenstand umfasst die Schulden des gesamten Staates, also von Bund,
+Ländern, Gemeinden und Sozialversicherungen einschließlich ihrer Extrahaushalte.
+Er wird nach den Regeln des Maastricht-Vertrags zum Nominalwert am Jahresende
+gemessen. Das Bruttoinlandsprodukt (BIP) misst die Wirtschaftsleistung eines
+Jahres, hier in jeweiligen Preisen, also ohne Bereinigung um Preisänderungen.
+
+Das Diagramm zeigt beide Größen in Milliarden Euro, von 1995 bis 2025.
+
+<Diagramm
+  typ="linie"
+  daten={daten}
+  x="jahr"
+  y="wert"
+  serie="reihe"
+  serienFarben={{ Bruttoinlandsprodukt: 'gold', Staatsschulden: 'rot' }}
+  einheit="Mrd. €"
+  titel="Staatsschulden und Bruttoinlandsprodukt"
+  untertitel="In Milliarden Euro, jeweilige Preise, 1995–2025"
+  quelle="Eurostat, Datensatz gov_10dd_edpt1 (Stand 21. Oktober 2026)"
+  quelleUrl="https://ec.europa.eu/eurostat/databrowser/view/gov_10dd_edpt1/default/table?lang=de"
+  abgerufen="2026-11-06"
+/>
+
+## Ansprüche aus der Alterssicherung
+
+Neben den Schulden hat der Staat Zusagen für künftige Altersleistungen gemacht.
+Diese Ansprüche zählen nicht zum Schuldenstand nach dem Maastricht-Vertrag. Das
+zweite Diagramm stellt sie dem Schuldenstand gegenüber, in Milliarden Euro, für
+die Jahre 2012, 2015, 2018 und 2021. Für andere Jahre liegen für Deutschland
+keine Werte vor.
+
+- **Pensionsansprüche der Beamten:** Versorgungsansprüche der Beamtinnen und
+  Beamten, Richterinnen und Richter sowie Soldatinnen und Soldaten bei Bund,
+  Ländern und Gemeinden.
+- **Ansprüche an die gesetzliche Rentenversicherung:** Rentenansprüche der
+  Versicherten in der gesetzlichen Rentenversicherung.
+
+Gezählt werden jeweils nur die bis zum Jahresende bereits erworbenen Ansprüche,
+umgerechnet auf ihren heutigen Wert. Künftige Beiträge und Steuern, aus denen
+die Leistungen bezahlt werden, sind nicht abgezogen. Die Höhe hängt stark von
+den Annahmen der Berechnung ab, etwa vom Zinssatz für die Abzinsung.
+
+<Diagramm
+  typ="linie"
+  daten={alterssicherung}
+  x="jahr"
+  y="wert"
+  serie="reihe"
+  serienFarben={{
+    'Ansprüche an die gesetzliche Rentenversicherung': '#477050',
+    'Staatsschulden': 'rot',
+    'Pensionsansprüche der Beamten': 'schwarz',
+  }}
+  einheit="Mrd. €"
+  titel="Staatsschulden und Ansprüche aus der Alterssicherung"
+  untertitel="In Milliarden Euro, 2012, 2015, 2018 und 2021"
+  quelle="Eurostat, Datensatz nasa_10_pens1 (Stand 10. März 2026), und Eurostat, Datensatz gov_10dd_edpt1 (Stand 21. Oktober 2026)"
+  quelleUrl="https://ec.europa.eu/eurostat/databrowser/view/nasa_10_pens1/default/table?lang=de"
+  abgerufen="2026-11-06"
+/>
+
+Die Staatsschulden in diesem Diagramm stammen aus demselben
+[Eurostat-Datensatz wie im ersten Diagramm](https://ec.europa.eu/eurostat/databrowser/view/gov_10dd_edpt1/default/table?lang=de)
+(abgerufen am 6. November 2026).

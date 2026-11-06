@@ -1,0 +1,14 @@
+[
+  {"jahr": 2012, "reihe": "Staatsschulden", "wert": 2234.8},
+  {"jahr": 2015, "reihe": "Staatsschulden", "wert": 2197.5},
+  {"jahr": 2018, "reihe": "Staatsschulden", "wert": 2086.4},
+  {"jahr": 2021, "reihe": "Staatsschulden", "wert": 2501.7},
+  {"jahr": 2012, "reihe": "Pensionsansprüche der Beamten", "wert": 1163.8},
+  {"jahr": 2015, "reihe": "Pensionsansprüche der Beamten", "wert": 1235.2},
+  {"jahr": 2018, "reihe": "Pensionsansprüche der Beamten", "wert": 1543.3},
+  {"jahr": 2021, "reihe": "Pensionsansprüche der Beamten", "wert": 1649.3},
+  {"jahr": 2012, "reihe": "Ansprüche an die gesetzliche Rentenversicherung", "wert": 6315.4},
+  {"jahr": 2015, "reihe": "Ansprüche an die gesetzliche Rentenversicherung", "wert": 6843.9},
+  {"jahr": 2018, "reihe": "Ansprüche an die gesetzliche Rentenversicherung", "wert": 8848.0},
+  {"jahr": 2021, "reihe": "Ansprüche an die gesetzliche Rentenversicherung", "wert": 10133.5}
+]
