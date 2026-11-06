@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/ArtikelLayout.astro
 titel: Durchschnittliche Rente und durchschnittliche Pension
-beschreibung: Wie sich die durchschnittliche Altersrente der gesetzlichen Rentenversicherung und das durchschnittliche Ruhegehalt der Pensionärinnen und Pensionäre des öffentlichen Dienstes von 2015 bis 2025 entwickelt haben.
+beschreibung: Wie sich die durchschnittliche Altersrente der gesetzlichen Rentenversicherung, die Standardrente nach 45 Entgeltpunkten und das durchschnittliche Ruhegehalt der Pensionärinnen und Pensionäre des öffentlichen Dienstes von 2015 bis 2025 entwickelt haben.
 kategorien: [Rente, Öffentlicher Dienst]
 datum: 2026-11-06
 ---
@@ -11,13 +11,23 @@ import daten from '../../data/rente-pension.json';
 Das Diagramm stellt die durchschnittliche Altersrente der gesetzlichen
 Rentenversicherung dem durchschnittlichen Ruhegehalt der Pensionärinnen und
 Pensionäre des öffentlichen Dienstes gegenüber, in Euro pro Monat, jeweils zum
-Jahresbeginn von 2015 bis 2025.
+Jahresbeginn von 2015 bis 2025. Zum Vergleich zeigt es außerdem die
+Standardrente, also die Rente nach 45 Beitragsjahren mit Durchschnittsverdienst.
 
 - **Altersrente:** durchschnittlicher Zahlbetrag aller Altersrenten im
   Rentenbestand der Deutschen Rentenversicherung, Männer und Frauen,
   Deutschland insgesamt. Der Zahlbetrag ist die Rente nach Abzug der Beiträge
   der Rentnerinnen und Rentner zur Kranken- und Pflegeversicherung, vor Steuern.
   Stichtag ist der 31. Dezember des Vorjahres.
+- **Standardrente (45 Entgeltpunkte):** gedachte Altersrente einer Person, die
+  45 Jahre lang genau das Durchschnittsentgelt aller Versicherten verdient und
+  damit 45 Entgeltpunkte erworben hat. Dargestellt ist die verfügbare
+  Standardrente, also nach Abzug der Beiträge zur Kranken- und
+  Pflegeversicherung, vor Steuern – derselbe Maßstab wie beim Zahlbetrag der
+  Altersrente. Maßgeblich ist der Wert, der am 1. Januar galt, also nach der
+  Rentenanpassung zum 1. Juli des Vorjahres. Bis 2023 ist der Wert für die alten
+  Bundesländer dargestellt, ab 2024 gilt ein einheitlicher Wert für ganz
+  Deutschland.
 - **Ruhegehalt (Pension):** durchschnittliches Bruttoruhegehalt der
   Pensionärinnen und Pensionäre nach dem Beamten- und Soldatenversorgungsrecht
   bei Bund, Ländern, Kommunen und Sozialversicherung, vor Steuern und vor
@@ -28,7 +38,9 @@ Die beiden Werte sind nur eingeschränkt vergleichbar. Die Altersrente ist ein
 Durchschnitt je Rente, nicht je Person; wer weitere Einkünfte hat, etwa eine
 Betriebsrente oder eine private Vorsorge, ist darin nur mit der gesetzlichen
 Rente erfasst. Viele Rentnerinnen und Rentner waren außerdem nur einen Teil
-ihres Erwerbslebens gesetzlich versichert. Das Ruhegehalt deckt dagegen sowohl
+ihres Erwerbslebens gesetzlich versichert. Die Standardrente ist dagegen
+kein Durchschnitt, sondern ein Rechenwert für einen idealtypischen
+Versicherungsverlauf, den viele Rentnerinnen und Rentner nicht erreichen. Das Ruhegehalt deckt dagegen sowohl
 die Grundversorgung als auch die Funktion einer betrieblichen
 Zusatzversorgung ab und setzt eine Laufbahn im Beamten- oder Soldatenverhältnis
 voraus. Die Altersrente ist für jedes Jahr dargestellt. Beim Ruhegehalt fehlen
@@ -44,12 +56,13 @@ veröffentlicht hat.
   serie="gruppe"
   serienFarben={{
     'Ruhegehalt (Pension)': 'schwarz',
+    'Standardrente (45 Entgeltpunkte)': 'rot',
     'Altersrente': 'gold',
   }}
   einheit="€"
-  titel="Durchschnittliche Altersrente und durchschnittliches Ruhegehalt"
+  titel="Durchschnittliche Altersrente, Standardrente und durchschnittliches Ruhegehalt"
   untertitel="In Euro pro Monat, jeweils zum Jahresbeginn, 2015–2025"
-  quelle="Deutsche Rentenversicherung, Rentenversicherung in Zeitreihen, Ausgabe 2025, Tabelle „Durchschnittliche Zahlbeträge der Versichertenrenten nach Rentenarten“ (Rentenbestand), und Pressemitteilungen des Statistischen Bundesamts zur Versorgungsempfängerstatistik"
+  quelle="Deutsche Rentenversicherung, Rentenversicherung in Zeitreihen, Ausgabe 2025, Tabellen „Durchschnittliche Zahlbeträge der Versichertenrenten nach Rentenarten“ (Rentenbestand) und „Standardrente und verfügbare Eckrente am jeweiligen Anpassungstermin“, und Pressemitteilungen des Statistischen Bundesamts zur Versorgungsempfängerstatistik"
   quelleUrl="https://www.deutsche-rentenversicherung.de/SharedDocs/Downloads/DE/Statistiken-und-Berichte/statistikpublikationen/rv_in_zeitreihen.pdf?__blob=publicationFile&v=1"
   abgerufen="2026-11-06"
 />
