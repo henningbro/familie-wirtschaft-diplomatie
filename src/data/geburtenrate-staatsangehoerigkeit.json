@@ -1,0 +1,392 @@
+[
+  {
+    "jahr": 2000,
+    "gruppe": "Insgesamt",
+    "wert": 1.38
+  },
+  {
+    "jahr": 2001,
+    "gruppe": "Insgesamt",
+    "wert": 1.35
+  },
+  {
+    "jahr": 2002,
+    "gruppe": "Insgesamt",
+    "wert": 1.34
+  },
+  {
+    "jahr": 2003,
+    "gruppe": "Insgesamt",
+    "wert": 1.34
+  },
+  {
+    "jahr": 2004,
+    "gruppe": "Insgesamt",
+    "wert": 1.35
+  },
+  {
+    "jahr": 2005,
+    "gruppe": "Insgesamt",
+    "wert": 1.34
+  },
+  {
+    "jahr": 2006,
+    "gruppe": "Insgesamt",
+    "wert": 1.33
+  },
+  {
+    "jahr": 2007,
+    "gruppe": "Insgesamt",
+    "wert": 1.37
+  },
+  {
+    "jahr": 2008,
+    "gruppe": "Insgesamt",
+    "wert": 1.38
+  },
+  {
+    "jahr": 2009,
+    "gruppe": "Insgesamt",
+    "wert": 1.36
+  },
+  {
+    "jahr": 2010,
+    "gruppe": "Insgesamt",
+    "wert": 1.39
+  },
+  {
+    "jahr": 2011,
+    "gruppe": "Insgesamt",
+    "wert": 1.39
+  },
+  {
+    "jahr": 2012,
+    "gruppe": "Insgesamt",
+    "wert": 1.41
+  },
+  {
+    "jahr": 2013,
+    "gruppe": "Insgesamt",
+    "wert": 1.42
+  },
+  {
+    "jahr": 2014,
+    "gruppe": "Insgesamt",
+    "wert": 1.48
+  },
+  {
+    "jahr": 2015,
+    "gruppe": "Insgesamt",
+    "wert": 1.51
+  },
+  {
+    "jahr": 2016,
+    "gruppe": "Insgesamt",
+    "wert": 1.6
+  },
+  {
+    "jahr": 2017,
+    "gruppe": "Insgesamt",
+    "wert": 1.58
+  },
+  {
+    "jahr": 2018,
+    "gruppe": "Insgesamt",
+    "wert": 1.58
+  },
+  {
+    "jahr": 2019,
+    "gruppe": "Insgesamt",
+    "wert": 1.56
+  },
+  {
+    "jahr": 2020,
+    "gruppe": "Insgesamt",
+    "wert": 1.55
+  },
+  {
+    "jahr": 2021,
+    "gruppe": "Insgesamt",
+    "wert": 1.61
+  },
+  {
+    "jahr": 2022,
+    "gruppe": "Insgesamt",
+    "wert": 1.49
+  },
+  {
+    "jahr": 2023,
+    "gruppe": "Insgesamt",
+    "wert": 1.39
+  },
+  {
+    "jahr": 2024,
+    "gruppe": "Insgesamt",
+    "wert": 1.35
+  },
+  {
+    "jahr": 2025,
+    "gruppe": "Insgesamt",
+    "wert": 1.32
+  },
+  {
+    "jahr": 2000,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.31
+  },
+  {
+    "jahr": 2001,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.29
+  },
+  {
+    "jahr": 2002,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.28
+  },
+  {
+    "jahr": 2003,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.28
+  },
+  {
+    "jahr": 2004,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.3
+  },
+  {
+    "jahr": 2005,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.29
+  },
+  {
+    "jahr": 2006,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.28
+  },
+  {
+    "jahr": 2007,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.33
+  },
+  {
+    "jahr": 2008,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.35
+  },
+  {
+    "jahr": 2009,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.33
+  },
+  {
+    "jahr": 2010,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.36
+  },
+  {
+    "jahr": 2011,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.34
+  },
+  {
+    "jahr": 2012,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.36
+  },
+  {
+    "jahr": 2013,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.37
+  },
+  {
+    "jahr": 2014,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.42
+  },
+  {
+    "jahr": 2015,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.43
+  },
+  {
+    "jahr": 2016,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.47
+  },
+  {
+    "jahr": 2017,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.45
+  },
+  {
+    "jahr": 2018,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.45
+  },
+  {
+    "jahr": 2019,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.43
+  },
+  {
+    "jahr": 2020,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.43
+  },
+  {
+    "jahr": 2021,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.49
+  },
+  {
+    "jahr": 2022,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.37
+  },
+  {
+    "jahr": 2023,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.27
+  },
+  {
+    "jahr": 2024,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.23
+  },
+  {
+    "jahr": 2025,
+    "gruppe": "Deutsche Frauen",
+    "wert": 1.2
+  },
+  {
+    "jahr": 2000,
+    "gruppe": "Ausländische Frauen",
+    "wert": 1.84
+  },
+  {
+    "jahr": 2001,
+    "gruppe": "Ausländische Frauen",
+    "wert": 1.74
+  },
+  {
+    "jahr": 2002,
+    "gruppe": "Ausländische Frauen",
+    "wert": 1.71
+  },
+  {
+    "jahr": 2003,
+    "gruppe": "Ausländische Frauen",
+    "wert": 1.7
+  },
+  {
+    "jahr": 2004,
+    "gruppe": "Ausländische Frauen",
+    "wert": 1.69
+  },
+  {
+    "jahr": 2005,
+    "gruppe": "Ausländische Frauen",
+    "wert": 1.66
+  },
+  {
+    "jahr": 2006,
+    "gruppe": "Ausländische Frauen",
+    "wert": 1.64
+  },
+  {
+    "jahr": 2007,
+    "gruppe": "Ausländische Frauen",
+    "wert": 1.64
+  },
+  {
+    "jahr": 2008,
+    "gruppe": "Ausländische Frauen",
+    "wert": 1.58
+  },
+  {
+    "jahr": 2009,
+    "gruppe": "Ausländische Frauen",
+    "wert": 1.57
+  },
+  {
+    "jahr": 2010,
+    "gruppe": "Ausländische Frauen",
+    "wert": 1.61
+  },
+  {
+    "jahr": 2011,
+    "gruppe": "Ausländische Frauen",
+    "wert": 1.82
+  },
+  {
+    "jahr": 2012,
+    "gruppe": "Ausländische Frauen",
+    "wert": 1.8
+  },
+  {
+    "jahr": 2013,
+    "gruppe": "Ausländische Frauen",
+    "wert": 1.82
+  },
+  {
+    "jahr": 2014,
+    "gruppe": "Ausländische Frauen",
+    "wert": 1.91
+  },
+  {
+    "jahr": 2015,
+    "gruppe": "Ausländische Frauen",
+    "wert": 2.02
+  },
+  {
+    "jahr": 2016,
+    "gruppe": "Ausländische Frauen",
+    "wert": 2.38
+  },
+  {
+    "jahr": 2017,
+    "gruppe": "Ausländische Frauen",
+    "wert": 2.27
+  },
+  {
+    "jahr": 2018,
+    "gruppe": "Ausländische Frauen",
+    "wert": 2.26
+  },
+  {
+    "jahr": 2019,
+    "gruppe": "Ausländische Frauen",
+    "wert": 2.22
+  },
+  {
+    "jahr": 2020,
+    "gruppe": "Ausländische Frauen",
+    "wert": 2.18
+  },
+  {
+    "jahr": 2021,
+    "gruppe": "Ausländische Frauen",
+    "wert": 2.21
+  },
+  {
+    "jahr": 2022,
+    "gruppe": "Ausländische Frauen",
+    "wert": 2.06
+  },
+  {
+    "jahr": 2023,
+    "gruppe": "Ausländische Frauen",
+    "wert": 1.89
+  },
+  {
+    "jahr": 2024,
+    "gruppe": "Ausländische Frauen",
+    "wert": 1.84
+  },
+  {
+    "jahr": 2025,
+    "gruppe": "Ausländische Frauen",
+    "wert": 1.78
+  }
+]

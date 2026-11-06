@@ -1,11 +1,12 @@
 ---
 layout: ../../layouts/ArtikelLayout.astro
 titel: Geburtenrate in Deutschland und Ungarn seit 2000
-beschreibung: Die zusammengefasste Geburtenziffer in Deutschland und Ungarn von 2000 bis 2024.
+beschreibung: Die zusammengefasste Geburtenziffer in Deutschland und Ungarn von 2000 bis 2024 sowie in Deutschland nach Staatsangehörigkeit der Mutter bis 2025.
 datum: 2026-11-06
 ---
 import Diagramm from '../../components/Diagramm.astro';
 import geburten from '../../data/geburtenrate.json';
+import nachStaatsangehoerigkeit from '../../data/geburtenrate-staatsangehoerigkeit.json';
 
 Die zusammengefasste Geburtenziffer gibt an, wie viele Kinder eine Frau im Laufe
 ihres Lebens bekäme, wenn die Geburtenverhältnisse eines Jahres dauerhaft gälten.
@@ -37,3 +38,27 @@ Das Diagramm zeigt ihre Entwicklung in Deutschland und Ungarn von 2000 bis 2024.
 
 Die Markierung zeigt nur den Zeitpunkt der Maßnahme. Ob und wie stark sie die
 Geburtenziffer beeinflusst hat, lässt sich aus dem Diagramm nicht ablesen.
+
+## Deutschland nach Staatsangehörigkeit der Mutter
+
+Das Statistische Bundesamt weist die zusammengefasste Geburtenziffer getrennt
+für Frauen mit deutscher und mit ausländischer Staatsangehörigkeit aus. Das
+Diagramm zeigt beide Werte und den Gesamtwert für Deutschland von 2000 bis 2025.
+
+Maßgeblich ist die Staatsangehörigkeit, nicht ein Migrationshintergrund:
+Eingebürgerte Frauen zählen als deutsche Frauen. Die Gesamtwerte von Destatis
+weichen geringfügig von denen von Eurostat im ersten Diagramm ab.
+
+<Diagramm
+  typ="linie"
+  daten={nachStaatsangehoerigkeit}
+  x="jahr"
+  y="wert"
+  serie="gruppe"
+  serienFarben={{ Insgesamt: 'schwarz', 'Deutsche Frauen': 'gold', 'Ausländische Frauen': '#3b6ea5' }}
+  titel="Zusammengefasste Geburtenziffer nach Staatsangehörigkeit der Mutter"
+  untertitel="Kinder je Frau, Deutschland, 2000–2025"
+  quelle="Destatis, GENESIS-Online, Tabellen 12612-0009 und 12612-0010"
+  quelleUrl="https://genesis.destatis.de/datenbank/online/statistic/12612/table/12612-0010"
+  abgerufen="2026-11-06"
+/>
