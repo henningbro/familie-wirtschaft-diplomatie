@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/ArtikelLayout.astro
-titel: Wirtschaftswachstum in Deutschland 2016 bis 2025
-beschreibung: Veränderung des preisbereinigten Bruttoinlandsprodukts gegenüber dem Vorjahr.
+titel: Wirtschaftswachstum in Deutschland seit 1951
+beschreibung: Veränderung des preisbereinigten Bruttoinlandsprodukts gegenüber dem Vorjahr von 1951 bis 2025.
 kategorie: Wirtschaft
 datum: 2026-11-06
 ---
@@ -11,6 +11,17 @@ import bip from '../../data/bip-wachstum.json';
 Das preisbereinigte Bruttoinlandsprodukt (BIP) misst die Wirtschaftsleistung
 ohne den Einfluss von Preisänderungen.
 
+Das Diagramm zeigt die jährliche Veränderung des preisbereinigten BIP gegenüber
+dem Vorjahr in Prozent, von 1951 bis 2025. Die Werte bis einschließlich 1991
+beziehen sich auf das frühere Bundesgebiet, die Werte ab 1992 auf Deutschland.
+Wegen methodischer Unterschiede sind die Ergebnisse der Zeiträume 1951 bis 1970,
+1971 bis 1991 und ab 1992 nicht vollständig miteinander vergleichbar.
+
+Die schwarze Linie zeigt den gleitenden Durchschnitt über fünf Jahre: Für jedes
+Jahr ist das der Mittelwert aus diesem Jahr und den vier Jahren davor. Sie glättet
+die Schwankungen einzelner Jahre und macht die längerfristige Entwicklung
+sichtbar. Der Durchschnitt ist selbst berechnet aus den Werten von Destatis.
+
 <Diagramm
   typ="balken"
   daten={bip}
@@ -18,9 +29,10 @@ ohne den Einfluss von Preisänderungen.
   y="wert"
   farbe="rot"
   einheit="%"
+  trend={5}
   titel="Bruttoinlandsprodukt, preisbereinigt"
-  untertitel="Veränderung gegenüber dem Vorjahr in Prozent"
-  quelle="Destatis, Pressemitteilung Nr. 017 vom 15. Januar 2026"
-  quelleUrl="https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/01/PD26_017_811.html"
+  untertitel="Veränderung gegenüber dem Vorjahr in Prozent, 1951 bis 2025"
+  quelle="Destatis, Langfristige Wirtschaftsentwicklung in Deutschland"
+  quelleUrl="https://www.destatis.de/DE/Themen/Wirtschaft/Volkswirtschaftliche-Gesamtrechnungen-Inlandsprodukt/BIP-Langfristig.html"
   abgerufen="2026-11-06"
 />
