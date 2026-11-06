@@ -1,0 +1,67 @@
+---
+layout: ../../layouts/ArtikelLayout.astro
+titel: Durchschnittliche Rente und durchschnittliche Pension
+beschreibung: Wie sich die durchschnittliche Altersrente der gesetzlichen Rentenversicherung und das durchschnittliche Ruhegehalt der Pensionärinnen und Pensionäre des öffentlichen Dienstes von 2015 bis 2025 entwickelt haben.
+datum: 2026-11-06
+---
+import Diagramm from '../../components/Diagramm.astro';
+import daten from '../../data/rente-pension.json';
+
+Das Diagramm stellt die durchschnittliche Altersrente der gesetzlichen
+Rentenversicherung dem durchschnittlichen Ruhegehalt der Pensionärinnen und
+Pensionäre des öffentlichen Dienstes gegenüber, in Euro pro Monat, jeweils zum
+Jahresbeginn von 2015 bis 2025.
+
+- **Altersrente:** durchschnittlicher Zahlbetrag aller Altersrenten im
+  Rentenbestand der Deutschen Rentenversicherung, Männer und Frauen,
+  Deutschland insgesamt. Der Zahlbetrag ist die Rente nach Abzug der Beiträge
+  der Rentnerinnen und Rentner zur Kranken- und Pflegeversicherung, vor Steuern.
+  Stichtag ist der 31. Dezember des Vorjahres.
+- **Ruhegehalt (Pension):** durchschnittliches Bruttoruhegehalt der
+  Pensionärinnen und Pensionäre nach dem Beamten- und Soldatenversorgungsrecht
+  bei Bund, Ländern, Kommunen und Sozialversicherung, vor Steuern und vor
+  Beiträgen zur Kranken- und Pflegeversicherung, die Pensionärinnen und
+  Pensionäre in der Regel selbst tragen. Stichtag ist der 1. Januar.
+
+Die beiden Werte sind nur eingeschränkt vergleichbar. Die Altersrente ist ein
+Durchschnitt je Rente, nicht je Person; wer weitere Einkünfte hat, etwa eine
+Betriebsrente oder eine private Vorsorge, ist darin nur mit der gesetzlichen
+Rente erfasst. Viele Rentnerinnen und Rentner waren außerdem nur einen Teil
+ihres Erwerbslebens gesetzlich versichert. Das Ruhegehalt deckt dagegen sowohl
+die Grundversorgung als auch die Funktion einer betrieblichen
+Zusatzversorgung ab und setzt eine Laufbahn im Beamten- oder Soldatenverhältnis
+voraus. Die Altersrente ist für jedes Jahr dargestellt. Beim Ruhegehalt fehlen
+die Jahre 2016 bis 2018, weil das Statistische Bundesamt dafür kein
+durchschnittliches Ruhegehalt für alle Pensionärinnen und Pensionäre
+veröffentlicht hat.
+
+<Diagramm
+  typ="linie"
+  daten={daten}
+  x="jahr"
+  y="wert"
+  serie="gruppe"
+  serienFarben={{
+    'Ruhegehalt (Pension)': 'schwarz',
+    'Altersrente': 'gold',
+  }}
+  einheit="€"
+  titel="Durchschnittliche Altersrente und durchschnittliches Ruhegehalt"
+  untertitel="In Euro pro Monat, jeweils zum Jahresbeginn, 2015–2025"
+  quelle="Deutsche Rentenversicherung, Rentenversicherung in Zeitreihen, Ausgabe 2025, Tabelle „Durchschnittliche Zahlbeträge der Versichertenrenten nach Rentenarten“ (Rentenbestand), und Pressemitteilungen des Statistischen Bundesamts zur Versorgungsempfängerstatistik"
+  quelleUrl="https://www.deutsche-rentenversicherung.de/SharedDocs/Downloads/DE/Statistiken-und-Berichte/statistikpublikationen/rv_in_zeitreihen.pdf?__blob=publicationFile&v=1"
+  abgerufen="2026-11-06"
+/>
+
+Die Werte zum Ruhegehalt stammen aus den Pressemitteilungen des Statistischen
+Bundesamts
+[Nr. 494 vom Dezember 2019](https://www.destatis.de/DE/Presse/Pressemitteilungen/2019/12/PD19_494_742.html),
+[Nr. 512 vom Dezember 2020](https://www.destatis.de/DE/Presse/Pressemitteilungen/2020/12/PD20_512_742.html),
+[Nr. 587 vom Dezember 2021](https://www.destatis.de/DE/Presse/Pressemitteilungen/2021/12/PD21_587_742.html),
+[Nr. 551 vom Dezember 2022](https://www.destatis.de/DE/Presse/Pressemitteilungen/2022/12/PD22_551_742.html),
+[Nr. 490 vom Dezember 2023](https://www.destatis.de/DE/Presse/Pressemitteilungen/2023/12/PD23_490_742.html),
+[Nr. 467 vom Dezember 2024](https://www.destatis.de/DE/Presse/Pressemitteilungen/2024/12/PD24_467_742.html)
+und
+[Nr. 455 vom 17. Dezember 2025](https://www.destatis.de/DE/Presse/Pressemitteilungen/2025/12/PD25_455_742.html);
+der Wert für 2015 ist in der letztgenannten Mitteilung enthalten (alle abgerufen
+am 6. November 2026).
