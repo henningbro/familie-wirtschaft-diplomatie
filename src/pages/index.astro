@@ -14,7 +14,6 @@ const artikel = Object.entries(dateien)
 const formatiere = (d: string) =>
   new Date(d).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
 
-const kategorien = ['Familie', 'Wirtschaft', 'Diplomatie'];
 ---
 
 <BaseLayout>
@@ -23,9 +22,6 @@ const kategorien = ['Familie', 'Wirtschaft', 'Diplomatie'];
       Zahlen erzählen Geschichten. Hier geht es um Familien, die Wirtschaft und
       die Außenbeziehungen Deutschlands – erklärt mit Daten und Grafiken.
     </p>
-    <ul class="themen">
-      {kategorien.map((k) => <li class={`kat-${k.toLowerCase()}`}>{k}</li>)}
-    </ul>
   </section>
 
   <section>
@@ -33,9 +29,8 @@ const kategorien = ['Familie', 'Wirtschaft', 'Diplomatie'];
     <ul class="liste">
       {
         artikel.map((a) => (
-          <li class={`kat-${a.kategorie.toLowerCase()}`}>
+          <li>
             <a href={url(`artikel/${a.slug}/`)}>
-              <span class="kategorie">{a.kategorie}</span>
               <time class="datum" datetime={new Date(a.datum).toISOString().slice(0, 10)}>{formatiere(a.datum)}</time>
               <h3>{a.titel}</h3>
               <p>{a.beschreibung}</p>
@@ -50,22 +45,7 @@ const kategorien = ['Familie', 'Wirtschaft', 'Diplomatie'];
 <style>
   .intro p {
     font-size: 1.15rem;
-    margin-top: 0;
-  }
-  .themen {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    list-style: none;
-    padding: 0;
-    margin: 1.25rem 0 3rem;
-  }
-  .themen li {
-    padding: 0.25rem 0.75rem;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    border: 2px solid var(--kat-bg);
+    margin: 0 0 3rem;
   }
   .ueberschrift {
     font-size: 1.1rem;
@@ -84,7 +64,6 @@ const kategorien = ['Familie', 'Wirtschaft', 'Diplomatie'];
   .liste li {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-left: 5px solid var(--kat-bg);
     border-radius: 6px;
     transition: transform 0.15s ease;
   }
@@ -95,14 +74,9 @@ const kategorien = ['Familie', 'Wirtschaft', 'Diplomatie'];
     text-decoration: none;
   }
   .liste .datum {
-    margin-left: 0.6rem;
     font-family: var(--sans);
     font-size: 0.85rem;
     color: var(--muted);
-  }
-  .liste .datum::before {
-    content: '·';
-    margin-right: 0.6rem;
   }
   .liste h3 {
     margin: 0.25rem 0 0.3rem;

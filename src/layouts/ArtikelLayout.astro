@@ -15,9 +15,8 @@ const aenderungen: { datum: string; beschreibung: string }[] = (frontmatter.aend
 ---
 
 <BaseLayout title={frontmatter.titel} description={frontmatter.beschreibung}>
-  <!-- data-pagefind-*: nur Artikel kommen in den Suchindex, Rubrik und Datum als Zusatzinfo -->
-  <article class={`kat-${frontmatter.kategorie.toLowerCase()}`} data-pagefind-body>
-    <span class="kategorie" data-pagefind-ignore data-pagefind-filter="kategorie" data-pagefind-meta="kategorie">{frontmatter.kategorie}</span>
+  <!-- data-pagefind-*: nur Artikel kommen in den Suchindex, Datum als Zusatzinfo -->
+  <article data-pagefind-body>
     <h1 data-pagefind-meta="title">{frontmatter.titel}</h1>
     <p class="meta" data-pagefind-ignore>Erstellt am <span data-pagefind-meta="datum">{formatiere(frontmatter.datum)}</span></p>
     <div class="inhalt">
@@ -44,7 +43,7 @@ const aenderungen: { datum: string; beschreibung: string }[] = (frontmatter.aend
 <style>
   h1 {
     font-size: clamp(1.8rem, 6vw, 2.6rem);
-    margin: 0.3rem 0 0.4rem;
+    margin: 0 0 0.4rem;
   }
   .meta {
     color: var(--muted);

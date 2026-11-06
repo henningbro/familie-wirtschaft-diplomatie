@@ -24,7 +24,7 @@ const basis = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
   type Treffer = {
     url: string;
     excerpt: string;
-    meta: { title?: string; kategorie?: string; datum?: string };
+    meta: { title?: string; datum?: string };
   };
   type Pagefind = {
     options: (o: Record<string, unknown>) => Promise<void>;
@@ -87,14 +87,12 @@ const basis = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
     zeige(
       `<p class="hinweis">${anzahl > treffer.length ? `${treffer.length} von ${anzahl}` : anzahl} Treffer</p><ul>` +
         treffer
-          .map((t) => {
-            const kat = escape(t.meta.kategorie);
-            return `<li class="kat-${kat.toLowerCase()}"><a href="${escape(t.url)}">
-              <span class="kategorie">${kat}</span>
+          .map(
+            (t) => `<li><a href="${escape(t.url)}">
               <strong>${escape(t.meta.title)}</strong>
               <span class="auszug">${t.excerpt}</span>
-            </a></li>`;
-          })
+            </a></li>`,
+          )
           .join('') +
         '</ul>',
     );
@@ -191,7 +189,6 @@ const basis = import.meta.env.BASE_URL.replace(/\/$/, '') + '/';
   }
   .ergebnisse :global(li) {
     border-top: 1px solid var(--border);
-    border-left: 4px solid var(--kat-bg);
   }
   .ergebnisse :global(a) {
     display: block;
