@@ -1,0 +1,111 @@
+---
+layout: ../../layouts/ArtikelLayout.astro
+titel: Abgabenlast in Deutschland seit 1965
+beschreibung: Steuern und Sozialbeiträge in Prozent des Bruttoinlandsprodukts von 1965 bis 2024, ihre Zusammensetzung und die Belastung eines Durchschnittsverdieners seit 2000.
+kategorien: [Staatsfinanzen, Wirtschaft, Arbeitsmarkt]
+datum: 2026-11-06
+---
+import Diagramm from '../../components/Diagramm.astro';
+import quote from '../../data/abgabenquote.json';
+import zusammensetzung from '../../data/abgabenquote-zusammensetzung.json';
+import keil from '../../data/abgabenkeil.json';
+
+Die Abgabenquote setzt alle Steuern und Sozialbeiträge, die Bund, Länder,
+Gemeinden, Sozialversicherungen und die Europäische Union in Deutschland
+einnehmen, ins Verhältnis zum Bruttoinlandsprodukt (BIP). Sie zeigt, welcher
+Teil der Wirtschaftsleistung eines Jahres als Abgaben an den Staat fließt.
+Gebühren und Beiträge für einzelne Leistungen des Staates zählen nicht dazu.
+
+Grundlage ist die Einnahmestatistik der OECD, die für Deutschland ab 1965
+vorliegt. Bis 1990 beziehen sich die Werte auf das frühere Bundesgebiet, ab 1991
+auf das vereinte Deutschland. Die Abgrenzung der OECD weicht leicht von der
+Abgabenquote ab, die das Bundesfinanzministerium veröffentlicht.
+
+Das Diagramm zeigt die Abgabenquote in Prozent des BIP, von 1965 bis 2024.
+
+<Diagramm
+  typ="linie"
+  daten={quote}
+  x="jahr"
+  y="wert"
+  farbe="rot"
+  einheit="%"
+  yBereich={[25, 40]}
+  titel="Abgabenquote"
+  untertitel="Steuern und Sozialbeiträge in Prozent des BIP, 1965–2024; y-Achse beginnt bei 25 %"
+  quelle="OECD, Revenue Statistics: Comparative tables, Deutschland, Staat insgesamt (Datensatz DF_RSOECD)"
+  quelleUrl="https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_REV_COMP_OECD%40DF_RSOECD&df[ag]=OECD.CTP.TPS"
+  abgerufen="2026-11-06"
+/>
+
+## Zusammensetzung der Abgaben
+
+Die Abgaben lassen sich nach ihrer Art aufteilen:
+
+- **Sozialbeiträge:** Beiträge von Arbeitnehmern, Arbeitgebern und
+  Selbstständigen zur Renten-, Kranken-, Pflege-, Arbeitslosen- und
+  Unfallversicherung.
+- **Steuern auf Einkommen und Gewinne:** vor allem Lohn- und Einkommensteuer,
+  Körperschaftsteuer, Gewerbesteuer, Kapitalertragsteuer und
+  Solidaritätszuschlag.
+- **Steuern auf Waren und Dienstleistungen:** vor allem Umsatzsteuer,
+  Energiesteuer, Tabaksteuer und Kfz-Steuer.
+- **Steuern auf Vermögen:** unter anderem Grundsteuer, Grunderwerbsteuer sowie
+  Erbschaft- und Schenkungsteuer; bis 1996 auch die Vermögensteuer.
+- **Sonstige Steuern:** Steuern, die keiner der anderen Gruppen zugeordnet
+  sind, etwa die bis 1979 erhobene Lohnsummensteuer.
+
+Das Diagramm zeigt die einzelnen Arten in Prozent des BIP, von 1965 bis 2024.
+Zusammen ergeben sie die Abgabenquote aus dem ersten Diagramm.
+
+<Diagramm
+  typ="balken-gestapelt"
+  daten={zusammensetzung}
+  x="jahr"
+  y="wert"
+  serie="art"
+  serienFarben={{
+    'Sozialbeiträge': '#1f4e79',
+    'Steuern auf Einkommen und Gewinne': '#e6a800',
+    'Steuern auf Waren und Dienstleistungen': '#b22222',
+    'Steuern auf Vermögen': '#477050',
+    'Sonstige Steuern': '#8a8a8a',
+  }}
+  einheit="%"
+  titel="Abgaben nach Art"
+  untertitel="In Prozent des BIP, 1965–2024"
+  quelle="OECD, Revenue Statistics: Comparative tables, Deutschland, Staat insgesamt (Datensatz DF_RSOECD)"
+  quelleUrl="https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_REV_COMP_OECD%40DF_RSOECD&df[ag]=OECD.CTP.TPS"
+  abgerufen="2026-11-06"
+/>
+
+## Belastung eines Durchschnittsverdieners
+
+Die Abgabenquote bezieht sich auf die gesamte Volkswirtschaft. Wie stark ein
+einzelnes Arbeitseinkommen belastet ist, misst die OECD mit dem Steuer- und
+Abgabenkeil. Er gibt an, welcher Teil der Arbeitskosten eines Arbeitgebers als
+Lohnsteuer, Solidaritätszuschlag und Sozialbeiträge von Arbeitnehmer und
+Arbeitgeber an den Staat geht. Kindergeld wird dabei gegengerechnet,
+Verbrauchsteuern wie die Umsatzsteuer sind nicht enthalten.
+
+Das Diagramm zeigt den Steuer- und Abgabenkeil in Prozent der Arbeitskosten für
+zwei Haushalte, deren Hauptverdiener genau den durchschnittlichen Bruttolohn
+eines Vollzeitbeschäftigten erhält, von 2000 bis 2025.
+
+<Diagramm
+  typ="linie"
+  daten={keil}
+  x="jahr"
+  y="wert"
+  serie="haushalt"
+  serienFarben={{
+    'Alleinstehend, ohne Kinder': 'rot',
+    'Verheiratet, Alleinverdiener, zwei Kinder': 'gold',
+  }}
+  einheit="%"
+  titel="Steuer- und Abgabenkeil bei Durchschnittslohn"
+  untertitel="In Prozent der Arbeitskosten, 2000–2025"
+  quelle="OECD, Taxing Wages: Comparative tables, Deutschland (Datensatz DF_TW_COMP)"
+  quelleUrl="https://data-explorer.oecd.org/vis?df[ds]=dsDisseminateFinalDMZ&df[id]=DSD_TAX_WAGES_COMP%40DF_TW_COMP&df[ag]=OECD.CTP.TPS"
+  abgerufen="2026-11-06"
+/>
