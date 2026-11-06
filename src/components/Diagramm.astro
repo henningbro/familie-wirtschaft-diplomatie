@@ -22,9 +22,13 @@ interface Props {
   serie?: string;
   /** Farbe je Linie bzw. Balkenteil, z. B. { Deutschland: 'gold', Ungarn: '#477050' }; die Reihenfolge bestimmt die Stapelung von unten nach oben */
   serienFarben?: Record<string, string>;
+  /** Nur bei typ="linie" mit `serie`: Name der Serie, die eine Prognose ist; sie wird gestrichelt und mit hinterlegtem Bereich gezeichnet */
+  prognose?: string;
   /** Nur bei typ="balken-gestapelt": Anteile am jeweiligen Gesamtwert in Prozent statt der absoluten Werte */
   anteile?: boolean;
   einheit?: string;
+  /** Nur bei typ="linie" mit Jahreswerten: fester Wertebereich der y-Achse, z. B. [450, 625], wenn ein Nullpunkt nicht sinnvoll ist */
+  yBereich?: [number, number];
   /** Nur bei typ="balken": gleitender Durchschnitt über so viele Werte (jeweiliger Wert und die Vorgänger) als Linie */
   trend?: number;
   /** Markierte Ereignisse, z. B. Inkrafttreten eines Gesetzes. `x` ist der Wert auf der x-Achse (z. B. Jahr oder "JJJJ-MM"). */
@@ -100,15 +104,26 @@ const konfig = { ...rest, ereignisse: ereignisse.map((e, i) => ({ x: e.x, farbe:
     if (k.typ === 'linie' && k.serie) {
       // Mehrere Linien mit Legende über dem Diagramm
       const namen = Object.keys(k.serienFarben ?? {});
+      const istPrognose = (d) => d[k.serie] === k.prognose;
+      // Prognosezeitraum hinterlegt und beschriftet
+      const prognoseX = k.daten.filter(istPrognose).map((d) => d[k.x]);
+      const bereich = prognoseX.length
+        ? [
+            Plot.rectX([0], { x1: Math.min(...prognoseX), x2: Math.max(...prognoseX), fill: 'currentColor', fillOpacity: 0.06 }),
+            Plot.text([0], { x: Math.min(...prognoseX), frameAnchor: 'bottom', text: () => k.prognose, textAnchor: 'start', dx: 6, dy: -8, fill: 'currentColor', fillOpacity: 0.7 }),
+          ]
+        : [];
       marks = [
-        Plot.ruleY([0], { stroke: 'currentColor', strokeOpacity: 0.2 }),
-        Plot.lineY(k.daten, { x: k.x, y: k.y, stroke: k.serie, strokeWidth: 2.5 }),
+        ...bereich,
+        ...(k.yBereich ? [] : [Plot.ruleY([0], { stroke: 'currentColor', strokeOpacity: 0.2 })]),
+        Plot.lineY(k.daten.filter((d) => !istPrognose(d)), { x: k.x, y: k.y, stroke: k.serie, strokeWidth: 2.5 }),
+        Plot.lineY(k.daten.filter(istPrognose), { x: k.x, y: k.y, stroke: k.serie, strokeWidth: 2.5, strokeDasharray: '6,4' }),
         Plot.dot(k.daten, { x: k.x, y: k.y, fill: k.serie, r: 2.5 }),
         Plot.tip(k.daten, Plot.pointer({ x: k.x, y: k.y, title: (d) => `${d[k.serie]}, ${d[k.x]}: ${zahl(d[k.y])}` })),
       ];
       extra = {
         x: { tickFormat: 'd', label: null },
-        y: { grid: true, label: null, tickFormat: achse },
+        y: { grid: true, label: null, tickFormat: achse, ...(k.yBereich ? { domain: k.yBereich } : {}) },
         color: { domain: namen, range: namen.map((n) => farbwert(k.serienFarben[n])), legend: true },
       };
     } else if (k.typ === 'linie' && /^\d{4}-\d{2}$/.test(String(k.daten[0]?.[k.x]))) {
@@ -131,12 +146,15 @@ const konfig = { ...rest, ereignisse: ereignisse.map((e, i) => ({ x: e.x, farbe:
       };
     } else if (k.typ === 'linie') {
       marks = [
-        Plot.ruleY([0], { stroke: 'currentColor', strokeOpacity: 0.2 }),
+        ...(k.yBereich ? [] : [Plot.ruleY([0], { stroke: 'currentColor', strokeOpacity: 0.2 })]),
         Plot.lineY(k.daten, { x: k.x, y: k.y, stroke: farbe, strokeWidth: 2.5 }),
         Plot.dot(k.daten, { x: k.x, y: k.y, fill: farbe, r: 3 }),
         Plot.tip(k.daten, Plot.pointerX({ x: k.x, y: k.y, title: (d) => `${d[k.x]}: ${zahl(d[k.y])}` })),
       ];
-      extra = { x: { tickFormat: 'd', label: null }, y: { grid: true, label: null, tickFormat: achse } };
+      extra = {
+        x: { tickFormat: 'd', label: null },
+        y: { grid: true, label: null, tickFormat: achse, ...(k.yBereich ? { domain: k.yBereich } : {}) },
+      };
     } else if (k.typ === 'balken-gestapelt') {
       // Gestapelte Balken je Jahr, Legende über dem Diagramm
       const namen = Object.keys(k.serienFarben ?? {});
@@ -222,6 +240,8 @@ const konfig = { ...rest, ereignisse: ereignisse.map((e, i) => ({ x: e.x, farbe:
         style: { fontSize: '13px', background: 'transparent' },
         locale: 'de-DE',
         marks,
+        // Platz für vierstellige Achsenbeschriftungen wie „1.800“
+        marginLeft: 50,
         ...extra,
         // Platz über dem Diagramm für die Ereignis-Nummern
         ...(k.ereignisse?.length ? { marginTop: 34 } : {}),
