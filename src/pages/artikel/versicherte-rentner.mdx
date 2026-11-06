@@ -1,0 +1,117 @@
+---
+layout: ../../layouts/ArtikelLayout.astro
+titel: Beitragszahler und Rentner in der gesetzlichen Rentenversicherung
+beschreibung: Wie sich die Zahl der aktiv Versicherten und die Zahl der Rentnerinnen und Rentner der gesetzlichen Rentenversicherung von 2000 bis 2023 entwickelt haben und wie die Bundesregierung das Verhältnis von Beitragszahlern zu Rentnern bis 2039 vorausberechnet.
+kategorien: [Rente, Bevölkerung, Arbeitsmarkt]
+datum: 2026-11-06
+---
+import Diagramm from '../../components/Diagramm.astro';
+import personen from '../../data/versicherte-rentner.json';
+import jeRentner from '../../data/versicherte-je-rentner.json';
+
+Die gesetzliche Rentenversicherung finanziert die laufenden Renten
+überwiegend aus den Beiträgen der aktuell Versicherten (Umlageverfahren),
+ergänzt um Zuschüsse des Bundes. Das Diagramm stellt die Zahl der aktiv
+Versicherten der Zahl der Rentnerinnen und Rentner gegenüber, in Millionen
+Personen, Deutschland insgesamt, für 2000, 2005 und jedes Jahr von 2010 bis
+2023. Für die Jahre dazwischen weist die Quelle keine Rentnerzahlen aus.
+
+- **Aktiv Versicherte:** Personen, die im Laufe des Jahres Beiträge gezahlt
+  haben oder für die Beiträge gezahlt wurden, oder die eine Anrechnungszeit
+  hatten, etwa wegen Arbeitslosigkeit oder Krankheit, und am Jahresende noch
+  keine Rente beziehen. Dazu zählen Pflichtversicherte (vor allem
+  Arbeitnehmerinnen und Arbeitnehmer), freiwillig Versicherte und
+  Anrechnungszeitversicherte, seit 1999 auch geringfügig Beschäftigte.
+  Stichtag ist der 31. Dezember.
+- **Rentnerinnen und Rentner:** Personen, die mindestens eine Rente der
+  gesetzlichen Rentenversicherung beziehen, also eine Altersrente, eine Rente
+  wegen Erwerbsminderung oder eine Witwen- bzw. Witwerrente. Wer mehrere Renten
+  bezieht, wird einmal gezählt. Waisenrenten sind nicht enthalten. Stichtag ist
+  der 1. Juli.
+
+Beamtinnen und Beamte, Soldatinnen und Soldaten sowie viele Selbstständige
+sind nicht gesetzlich rentenversichert und deshalb in keiner der beiden
+Gruppen enthalten. Nicht alle aktiv Versicherten zahlen selbst Beiträge: Für
+Bezieherinnen und Bezieher von Arbeitslosengeld oder für Zeiten der
+Kindererziehung übernehmen andere Stellen die Beiträge, bei
+Anrechnungszeiten werden keine Beiträge gezahlt.
+
+<Diagramm
+  typ="linie"
+  daten={personen}
+  x="jahr"
+  y="wert"
+  serie="gruppe"
+  serienFarben={{
+    'Aktiv Versicherte': 'gold',
+    'Rentnerinnen und Rentner': 'schwarz',
+  }}
+  einheit="Mio."
+  titel="Aktiv Versicherte und Rentnerinnen und Rentner"
+  untertitel="In Millionen Personen, Deutschland, 2000–2023"
+  quelle="Deutsche Rentenversicherung, Rentenversicherung in Zeitreihen, Ausgabe 2025, Tabellen „Aktiv und passiv Versicherte am 31.12.“, „Versichertenstruktur am 31.12.“ und „Rentenbestand nach Rentnergruppen“"
+  quelleUrl="https://www.deutsche-rentenversicherung.de/SharedDocs/Downloads/DE/Statistiken-und-Berichte/statistikpublikationen/rv_in_zeitreihen.pdf?__blob=publicationFile&v=1"
+  abgerufen="2026-11-06"
+/>
+
+## Beitragszahler je Rentnerin oder Rentner bis 2039
+
+Das zweite Diagramm zeigt, wie viele Beitragszahlende rechnerisch auf eine
+Rentnerin oder einen Rentner kommen: als durchgezogene Linie die bisherige
+Entwicklung von 2000 bis 2023, als gestrichelte Linie im hinterlegten Bereich
+die Vorausberechnung der Bundesregierung von 2025 bis 2039.
+
+**Bisherige Entwicklung:** Zahl der aktiv Versicherten geteilt durch Zahl der
+Rentnerinnen und Rentner aus dem ersten Diagramm, selbst berechnet.
+
+**Vorausberechnung:** Die Bundesregierung berechnet im jährlichen
+[Rentenversicherungsbericht](https://dserver.bundestag.de/btd/21/030/2103080.pdf)
+die Finanzen der gesetzlichen Rentenversicherung für die folgenden 15 Jahre
+voraus; der aktuelle Bericht reicht deshalb bis zum Jahr 2039, nicht weiter.
+Er zählt nicht Personen, sondern rechnet in Äquivalenzgrößen:
+
+- **Äquivalenzbeitragszahler:** alle Rentenbeiträge der
+  versicherungspflichtig und geringfügig Beschäftigten sowie der Beziehenden
+  von Arbeitslosengeld, geteilt durch den Beitrag einer Person mit
+  Durchschnittsverdienst.
+- **Äquivalenzrentner:** alle Rentenausgaben, geteilt durch eine Altersrente
+  nach 45 Beitragsjahren mit Durchschnittsverdienst (Standardrente).
+
+Der Bericht weist den Rentnerquotienten aus, also Äquivalenzrentner je
+Äquivalenzbeitragszahler. Dargestellt ist der selbst berechnete Kehrwert,
+damit beide Linien dieselbe Richtung zeigen. Wegen der unterschiedlichen
+Abgrenzung schließen die beiden Linien nicht nahtlos aneinander an und lassen
+sich nur eingeschränkt miteinander vergleichen.
+
+Die Vorausberechnung beruht auf Annahmen zu Geburtenrate, Lebenserwartung,
+Zuwanderung sowie Lohn- und Beschäftigungsentwicklung. Dargestellt ist die
+mittlere Variante des Berichts; sie berücksichtigt die schrittweise Anhebung
+der Regelaltersgrenze auf 67 Jahre. Weichen die tatsächlichen Entwicklungen
+von den Annahmen ab, ändern sich auch die Ergebnisse.
+
+Keiner der beiden Werte ist ein Maß für die Finanzlage der
+Rentenversicherung. Das Verhältnis der Personen berücksichtigt weder die Höhe
+der Beiträge und Renten noch, dass viele aktiv Versicherte in Teilzeit oder
+geringfügig beschäftigt sind oder gar keine Beiträge zahlen.
+
+<Diagramm
+  typ="linie"
+  daten={jeRentner}
+  x="jahr"
+  y="wert"
+  serie="gruppe"
+  serienFarben={{
+    'Aktiv Versicherte je Rentner': 'rot',
+    'Vorausberechnung': 'schwarz',
+  }}
+  prognose="Vorausberechnung"
+  titel="Beitragszahlende je Rentnerin oder Rentner"
+  untertitel="Deutschland, 2000–2023 aktiv Versicherte je Rentnerin oder Rentner, 2025–2039 Vorausberechnung als Äquivalenzbeitragszahler je Äquivalenzrentner (mittlere Variante), eigene Berechnung"
+  quelle="Deutsche Rentenversicherung, Rentenversicherung in Zeitreihen, Ausgabe 2025; Bundesregierung, Rentenversicherungsbericht 2025, Bundestagsdrucksache 21/3080, Übersicht B 3.5 (jeweils eigene Berechnung)"
+  quelleUrl="https://dserver.bundestag.de/btd/21/030/2103080.pdf"
+  abgerufen="2026-11-06"
+/>
+
+Die Zahlen für 2000 bis 2023 stammen aus der Broschüre
+[„Rentenversicherung in Zeitreihen“, Ausgabe 2025](https://www.deutsche-rentenversicherung.de/SharedDocs/Downloads/DE/Statistiken-und-Berichte/statistikpublikationen/rv_in_zeitreihen.pdf?__blob=publicationFile&v=1)
+der Deutschen Rentenversicherung (abgerufen am 6. November 2026).
