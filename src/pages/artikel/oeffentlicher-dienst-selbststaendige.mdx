@@ -1,0 +1,51 @@
+---
+layout: ../../layouts/ArtikelLayout.astro
+titel: Öffentlicher Dienst und Selbstständige seit 2000
+beschreibung: Wie sich die Zahl der Beschäftigten im öffentlichen Dienst, darunter Beamte und Richter, und die Zahl der Selbstständigen von 2000 bis 2025 entwickelt haben.
+kategorien: [Öffentlicher Dienst, Arbeitsmarkt]
+datum: 2026-11-06
+---
+import Diagramm from '../../components/Diagramm.astro';
+import daten from '../../data/oeffentlicher-dienst-selbststaendige.json';
+
+Das Diagramm stellt die Zahl der Beschäftigten im öffentlichen Dienst der Zahl
+der Selbstständigen in Deutschland gegenüber, in Tausend, von 2000 bis 2025.
+Zusätzlich zeigt es die Beamten und Richter als Teil des öffentlichen Dienstes.
+
+- **Beschäftigte im öffentlichen Dienst:** alle Beschäftigten bei Bund, Ländern,
+  Kommunen und Sozialversicherungen, also Beamte und Richter, Berufs- und
+  Zeitsoldaten sowie Arbeitnehmerinnen und Arbeitnehmer, jeweils zum Stichtag
+  30. Juni.
+- **Beamte und Richter:** Beamtinnen und Beamte sowie Richterinnen und Richter
+  in diesen Bereichen, ohne Berufs- und Zeitsoldaten, ebenfalls zum 30. Juni.
+- **Selbstständige:** Selbstständige einschließlich mithelfender
+  Familienangehöriger, die in Deutschland arbeiten, als Jahresdurchschnitt.
+
+Die Reihen beruhen auf unterschiedlichen Erhebungen: Der öffentliche Dienst wird
+zu einem Stichtag gezählt, die Selbstständigen als Durchschnitt über das Jahr.
+Für den öffentlichen Dienst veröffentlicht das Statistische Bundesamt Werte bis
+2020 in Fünfjahresschritten, danach jährlich; die Werte für 2025 sind dort
+vorläufig.
+
+<Diagramm
+  typ="linie"
+  daten={daten}
+  x="jahr"
+  y="wert"
+  serie="gruppe"
+  serienFarben={{
+    'Beschäftigte im öffentlichen Dienst': 'schwarz',
+    'Selbstständige': 'gold',
+    'Beamte und Richter': 'rot',
+  }}
+  einheit="Tsd."
+  titel="Öffentlicher Dienst und Selbstständige"
+  untertitel="In Tausend, 2000–2025"
+  quelle="Destatis, Beschäftigte des öffentlichen Dienstes nach Geschlecht und der Art des Dienst- oder Arbeitsverhältnisses (Stand 22. Juni 2026), und Destatis, Selbstständige im Inland nach Wirtschaftssektoren (Stand 30. September 2026)"
+  quelleUrl="https://www.destatis.de/DE/Themen/Staat/Oeffentlicher-Dienst/Tabellen/beschaeftigte-geschlecht.html"
+  abgerufen="2026-11-06"
+/>
+
+Die Zahlen zu den Selbstständigen stammen aus einer
+[eigenen Tabelle des Statistischen Bundesamts](https://www.destatis.de/DE/Themen/Wirtschaft/Konjunkturindikatoren/Lange-Reihen/Arbeitsmarkt/lrerw15a.html)
+(abgerufen am 6. November 2026).
