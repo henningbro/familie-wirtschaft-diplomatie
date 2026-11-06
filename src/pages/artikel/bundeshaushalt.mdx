@@ -1,0 +1,197 @@
+---
+layout: ../../layouts/ArtikelLayout.astro
+titel: Einnahmen und Ausgaben des Bundes seit 2000
+beschreibung: Steuereinnahmen, Ausgaben und Kredite des Bundes, die Aufteilung seiner Ausgaben nach Aufgabenbereichen und der Anteil der Zahlungen an die gesetzliche Rentenversicherung an seinen Steuereinnahmen.
+kategorien: [Staatsfinanzen, Rente]
+datum: 2026-11-06
+---
+import Diagramm from '../../components/Diagramm.astro';
+import haushalt from '../../data/bund-haushalt.json';
+import bereiche from '../../data/bund-ausgaben-bereiche.json';
+import bundesmittel from '../../data/bund-rente-bundesmittel.json';
+import anteilSteuern from '../../data/bund-rente-anteil-steuern.json';
+
+export const farben = {
+  'Soziale Sicherung': '#1f4e79',
+  'Allgemeine öffentliche Verwaltung': '#8a8a8a',
+  'Wirtschaftliche Angelegenheiten': '#e6a800',
+  'Verteidigung': '#8c564b',
+  'Bildung': '#477050',
+  'Gesundheit': '#c0392b',
+  'Öffentliche Ordnung und Sicherheit': '#5b9bd5',
+  'Umweltschutz': '#9acd32',
+  'Freizeit, Sport, Kultur und Religion': '#c27ba0',
+  'Wohnungswesen und kommunale Einrichtungen': '#e07b39',
+};
+
+Dieser Artikel betrachtet nur den Bund, nicht Länder, Gemeinden und
+Sozialversicherungen. Die Sozialversicherungen finanzieren sich überwiegend aus
+Beiträgen, der Bund vor allem aus Steuern und Krediten.
+
+## Steuereinnahmen, Ausgaben und Kredite
+
+Das erste Diagramm zeigt die Ausgaben des Bundeshaushalts, seine
+Steuereinnahmen und die Nettokreditaufnahme, also die neuen Schulden abzüglich
+der Tilgung, in Milliarden Euro. Die Steuereinnahmen sind der Anteil des Bundes
+am gesamten Steueraufkommen, nach Abzug der Ergänzungszuweisungen an die
+Länder. Das Bundesfinanzministerium veröffentlicht diese Übersicht für 2000,
+2005 und 2010 sowie jährlich ab 2015. Die Werte für 2025 stammen aus einer
+eigenen Tabelle des Ministeriums.
+
+<Diagramm
+  typ="linie"
+  daten={haushalt}
+  x="jahr"
+  y="wert"
+  serie="reihe"
+  serienFarben={{ Ausgaben: 'schwarz', Steuereinnahmen: 'gold', Nettokreditaufnahme: 'rot' }}
+  einheit="Mrd. €"
+  titel="Bundeshaushalt: Ausgaben, Steuereinnahmen und Nettokreditaufnahme"
+  untertitel="In Milliarden Euro, Ist-Ergebnisse, 2000, 2005, 2010 und 2015–2025"
+  quelle="Bundesministerium der Finanzen, Monatsbericht März 2025, Gesamtübersicht über die Entwicklung des Bundeshaushalts (Stand Januar 2025)"
+  quelleUrl="https://www.bundesfinanzministerium.de/Monatsberichte/Ausgabe/2025/03/Inhalte/Kapitel-6-Statistiken/6-1-s10-gesamtuebersicht-bundeshaushalt.html"
+  abgerufen="2026-11-06"
+/>
+
+Die Werte für 2016 stammen aus der
+[Ausgabe vom Oktober 2024 derselben Übersicht](https://www.bundesfinanzministerium.de/Monatsberichte/Ausgabe/2024/10/Inhalte/Kapitel-6-Statistiken/6-1-11-gesamtuebersicht-entwicklung-bundeshaushalt.html),
+die Werte für 2025 aus der Tabelle
+[Entwicklung des Bundeshaushalts im Datenportal des Bundesfinanzministeriums](https://www.bundesfinanzministerium.de/Datenportal/Daten/offene-daten/haushalt-oeffentliche-finanzen/U7-Entwicklung-des-Bundeshaushalts/U7-Entwicklung-des-Bundeshaushalts.html)
+(beide abgerufen am 6. November 2026).
+
+## Wofür der Bund sein Geld ausgibt
+
+Die Aufteilung nach Aufgabenbereichen folgt der internationalen Klassifikation
+der Aufgabenbereiche des Staates (COFOG). Eurostat veröffentlicht sie für jedes
+Jahr. Sie umfasst neben dem Bundeshaushalt auch die Extrahaushalte des Bundes,
+etwa Sondervermögen, und folgt den Regeln der Volkswirtschaftlichen
+Gesamtrechnungen. Die Summen liegen deshalb über den Ausgaben des
+Bundeshaushalts im ersten Diagramm.
+
+- **Soziale Sicherung:** unter anderem die Zahlungen an die
+  Rentenversicherung, das Bürgergeld, Familienleistungen und die Pensionen der
+  Bundesbeamten.
+- **Allgemeine öffentliche Verwaltung:** Regierung, Parlament,
+  Finanzverwaltung, auswärtige Angelegenheiten und Entwicklungshilfe,
+  Grundlagenforschung, Zinsen auf die Schulden des Bundes sowie allgemeine
+  Zahlungen an andere staatliche Ebenen.
+- **Wirtschaftliche Angelegenheiten:** unter anderem Verkehr, Energie,
+  Landwirtschaft und Arbeitsmarktförderung.
+- **Verteidigung:** militärische und zivile Verteidigung sowie Militärhilfe
+  für das Ausland.
+- **Bildung:** unter anderem Ausbildungsförderung und Hochschulen.
+- **Gesundheit:** unter anderem Zuschüsse an das Gesundheitswesen.
+- **Öffentliche Ordnung und Sicherheit:** unter anderem Bundespolizei und
+  Bundesgerichte.
+- **Umweltschutz**, **Freizeit, Sport, Kultur und Religion** sowie
+  **Wohnungswesen und kommunale Einrichtungen**.
+
+Das Diagramm zeigt die Ausgaben je Bereich in Milliarden Euro, von 2000 bis
+2024. Die Werte für 2022 bis 2024 sind vorläufig.
+
+<Diagramm
+  typ="balken-gestapelt"
+  daten={bereiche}
+  x="jahr"
+  y="wert"
+  serie="bereich"
+  serienFarben={farben}
+  einheit="Mrd. €"
+  titel="Ausgaben des Bundes nach Aufgabenbereichen"
+  untertitel="In Milliarden Euro, jeweilige Preise, 2000–2024"
+  quelle="Eurostat, Datensatz gov_10a_exp, Sektor Zentralstaat (Stand 21. Oktober 2026)"
+  quelleUrl="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=de"
+  abgerufen="2026-11-06"
+/>
+
+Das nächste Diagramm zeigt dieselben Daten als Anteil der Bereiche an den
+gesamten Ausgaben des Bundes im jeweiligen Jahr, in Prozent.
+
+<Diagramm
+  typ="balken-gestapelt"
+  anteile
+  daten={bereiche}
+  x="jahr"
+  y="wert"
+  serie="bereich"
+  serienFarben={farben}
+  einheit="Mrd. €"
+  titel="Anteile der Aufgabenbereiche an den Ausgaben des Bundes"
+  untertitel="In Prozent der gesamten Ausgaben, 2000–2024"
+  quelle="Eurostat, Datensatz gov_10a_exp, Sektor Zentralstaat (Stand 21. Oktober 2026), eigene Berechnung der Anteile"
+  quelleUrl="https://ec.europa.eu/eurostat/databrowser/view/gov_10a_exp/default/table?lang=de"
+  abgerufen="2026-11-06"
+/>
+
+## Zahlungen an die Rentenversicherung
+
+Die gesetzliche Rentenversicherung finanziert sich vor allem aus den Beiträgen
+der Versicherten und ihrer Arbeitgeber. Zusätzlich zahlt der Bund an sie:
+
+- **Bundeszuschüsse an die allgemeine Rentenversicherung:** der allgemeine
+  Bundeszuschuss, der zusätzliche Bundeszuschuss und dessen Erhöhungsbetrag.
+  Sie sollen unter anderem Leistungen abdecken, denen keine Beiträge
+  gegenüberstehen.
+- **Beiträge des Bundes für Kindererziehungszeiten:** Der Bund zahlt für
+  Eltern in den ersten Lebensjahren eines Kindes Rentenbeiträge.
+- **Weitere Bundesmittel:** der Bundeszuschuss an die knappschaftliche
+  Rentenversicherung sowie Erstattungen, unter anderem für Ansprüche aus
+  Zusatz- und Sonderversorgungssystemen der DDR.
+
+Diese Zahlungen sind in den Diagrammen oben im Bereich Soziale Sicherung
+enthalten. Die Pensionen der Bundesbeamten gehören nicht dazu. Das Diagramm
+zeigt die Zahlungen in Milliarden Euro, von 2000 bis 2024.
+
+<Diagramm
+  typ="balken-gestapelt"
+  daten={bundesmittel}
+  x="jahr"
+  y="wert"
+  serie="art"
+  serienFarben={{
+    'Bundeszuschüsse an die allgemeine Rentenversicherung': '#1f4e79',
+    'Beiträge des Bundes für Kindererziehungszeiten': '#e6a800',
+    'Weitere Bundesmittel': '#8a8a8a',
+  }}
+  einheit="Mrd. €"
+  titel="Zahlungen des Bundes an die gesetzliche Rentenversicherung"
+  untertitel="In Milliarden Euro, 2000–2024"
+  quelle="Deutsche Rentenversicherung, Rentenversicherung in Zeitreihen 2025, Tabelle „Ausgewählte Bundesmittel an die gesetzliche Rentenversicherung“ (Stand 13. Oktober 2025)"
+  quelleUrl="https://www.deutsche-rentenversicherung.de/SharedDocs/Downloads/DE/Statistiken-und-Berichte/statistikpublikationen/rv_in_zeitreihen.pdf"
+  abgerufen="2026-11-06"
+/>
+
+## Anteil an den Steuereinnahmen des Bundes
+
+Das letzte Diagramm setzt die Zahlungen an die Rentenversicherung ins
+Verhältnis zu den Steuereinnahmen des Bundes aus dem ersten Diagramm, in
+Prozent. Es zeigt zwei Abgrenzungen: alle Zahlungen des Bundes an die
+Rentenversicherung und nur die Bundeszuschüsse an die allgemeine
+Rentenversicherung. Je nach Abgrenzung fällt der Anteil unterschiedlich aus.
+Dargestellt sind die Jahre, für die beide Werte vorliegen.
+
+Ein Teil der Ausgaben des Bundes wird nicht aus Steuern, sondern aus Krediten
+und sonstigen Einnahmen bezahlt. Der Anteil an den Steuereinnahmen ist deshalb
+höher als der Anteil an den Ausgaben.
+
+<Diagramm
+  typ="linie"
+  daten={anteilSteuern}
+  x="jahr"
+  y="wert"
+  serie="reihe"
+  serienFarben={{
+    'Alle Bundesmittel an die Rentenversicherung': 'schwarz',
+    'Davon Bundeszuschüsse an die allgemeine Rentenversicherung': '#1f4e79',
+  }}
+  einheit="%"
+  titel="Zahlungen an die Rentenversicherung im Verhältnis zu den Steuereinnahmen des Bundes"
+  untertitel="In Prozent der Steuereinnahmen des Bundes, 2000, 2005, 2010 und 2015–2024"
+  quelle="Deutsche Rentenversicherung, Rentenversicherung in Zeitreihen 2025 (Stand 13. Oktober 2025), und Bundesministerium der Finanzen, Gesamtübersicht über die Entwicklung des Bundeshaushalts (Stand Januar 2025), eigene Berechnung"
+  quelleUrl="https://www.deutsche-rentenversicherung.de/SharedDocs/Downloads/DE/Statistiken-und-Berichte/statistikpublikationen/rv_in_zeitreihen.pdf"
+  abgerufen="2026-11-06"
+/>
+
+Die Steuereinnahmen stammen aus der
+[Gesamtübersicht über die Entwicklung des Bundeshaushalts](https://www.bundesfinanzministerium.de/Monatsberichte/Ausgabe/2025/03/Inhalte/Kapitel-6-Statistiken/6-1-s10-gesamtuebersicht-bundeshaushalt.html)
+des Bundesfinanzministeriums (abgerufen am 6. November 2026).

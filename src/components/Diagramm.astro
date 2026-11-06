@@ -7,7 +7,7 @@
  *             titel="..." quelle="Destatis" quelleUrl="https://…" abgerufen="2026-11-06" />
  */
 interface Props {
-  typ: 'linie' | 'balken' | 'balken-horizontal';
+  typ: 'linie' | 'balken' | 'balken-gestapelt' | 'balken-horizontal';
   daten: Record<string, unknown>[];
   x: string;
   y: string;
@@ -18,10 +18,12 @@ interface Props {
   /** Abrufdatum der Quelle im Format JJJJ-MM-TT */
   abgerufen: string;
   farbe?: 'schwarz' | 'rot' | 'gold';
-  /** Nur bei typ="linie": Feld, nach dem die Daten in mehrere Linien aufgeteilt werden */
+  /** Bei typ="linie" und "balken-gestapelt": Feld, nach dem die Daten in mehrere Linien bzw. Balkenteile aufgeteilt werden */
   serie?: string;
-  /** Farbe je Linie, z. B. { Deutschland: 'gold', Ungarn: '#477050' } */
+  /** Farbe je Linie bzw. Balkenteil, z. B. { Deutschland: 'gold', Ungarn: '#477050' }; die Reihenfolge bestimmt die Stapelung von unten nach oben */
   serienFarben?: Record<string, string>;
+  /** Nur bei typ="balken-gestapelt": Anteile am jeweiligen Gesamtwert in Prozent statt der absoluten Werte */
+  anteile?: boolean;
   einheit?: string;
   /** Nur bei typ="balken": gleitender Durchschnitt über so viele Werte (jeweiliger Wert und die Vorgänger) als Linie */
   trend?: number;
@@ -135,6 +137,35 @@ const konfig = { ...rest, ereignisse: ereignisse.map((e, i) => ({ x: e.x, farbe:
         Plot.tip(k.daten, Plot.pointerX({ x: k.x, y: k.y, title: (d) => `${d[k.x]}: ${zahl(d[k.y])}` })),
       ];
       extra = { x: { tickFormat: 'd', label: null }, y: { grid: true, label: null, tickFormat: achse } };
+    } else if (k.typ === 'balken-gestapelt') {
+      // Gestapelte Balken je Jahr, Legende über dem Diagramm
+      const namen = Object.keys(k.serienFarben ?? {});
+      const summe = new Map();
+      for (const d of k.daten) summe.set(d[k.x], (summe.get(d[k.x]) ?? 0) + d[k.y]);
+      const prozent = (d) => (d[k.y] / summe.get(d[k.x])) * 100;
+      const pz = (v: number) => v.toLocaleString('de-DE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' %';
+      const daten = k.daten.map((d) => ({ ...d, anteil: prozent(d) }));
+      marks = [
+        Plot.barY(daten, {
+          x: k.x,
+          y: k.anteile ? 'anteil' : k.y,
+          fill: k.serie,
+          order: namen,
+          tip: true,
+          title: (d) => `${d[k.serie]}, ${d[k.x]}\n${zahl(d[k.y])} (${pz(d.anteil)})`,
+        }),
+        Plot.ruleY([0]),
+      ];
+      const kurz = breite < 500 ? (d: string) => `'${String(d).slice(-2)}` : undefined;
+      const jahre = [...summe.keys()];
+      const abstand = jahre.length > 25 ? (breite < 700 ? 10 : 5) : breite < 700 ? 5 : 0;
+      const ticks = abstand ? jahre.filter((j) => Number(j) % abstand === 0) : undefined;
+      extra = {
+        x: { type: 'band', label: null, tickFormat: kurz, ticks },
+        y: { grid: true, label: null, tickFormat: k.anteile ? (d: number) => `${d} %` : achse, ...(k.anteile ? { domain: [0, 100] } : {}) },
+        color: { domain: namen, range: namen.map((n) => farbwert(k.serienFarben[n])), legend: true },
+        height: Math.max(320, Math.min(460, breite * 0.7)),
+      };
     } else if (k.typ === 'balken') {
       marks = [
         Plot.barY(k.daten, { x: k.x, y: k.y, fill: (d) => (d[k.y] < 0 ? css.getPropertyValue('--muted').trim() : farbe) }),
