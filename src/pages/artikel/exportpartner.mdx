@@ -1,0 +1,29 @@
+---
+layout: ../../layouts/ArtikelLayout.astro
+titel: Wohin Deutschland exportiert
+beschreibung: Die wichtigsten Abnehmerländer deutscher Waren.
+kategorie: Diplomatie
+datum: 2026-11-04
+---
+import Diagramm from '../../components/Diagramm.astro';
+import export_ from '../../data/exportpartner.json';
+
+Handelsbeziehungen sind auch außenpolitische Beziehungen. Ein Blick auf die
+größten Abnehmer deutscher Waren zeigt, wie eng Deutschland mit seinen Partnern
+verflochten ist.
+
+<Diagramm
+  typ="balken-horizontal"
+  daten={export_}
+  x="land"
+  y="wert"
+  farbe="schwarz"
+  einheit="Mrd. €"
+  titel="Größte Exportpartner Deutschlands"
+  untertitel="Warenexporte 2024 in Milliarden Euro"
+  quelle="Statistisches Bundesamt (Destatis) – gerundete Entwurfswerte, vor Veröffentlichung prüfen"
+/>
+
+## Was das für die Außenpolitik bedeutet
+
+Hier folgt der eigentliche Text des Artikels.

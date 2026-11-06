@@ -1,0 +1,28 @@
+---
+layout: ../../layouts/ArtikelLayout.astro
+titel: Ein Jahrzehnt deutsche Wirtschaft in einem Diagramm
+beschreibung: Reales Wachstum des Bruttoinlandsprodukts 2015 bis 2024.
+kategorie: Wirtschaft
+datum: 2026-11-05
+---
+import Diagramm from '../../components/Diagramm.astro';
+import bip from '../../data/bip-wachstum.json';
+
+Auf solide Jahre folgte der Corona-Einbruch 2020, die Erholung 2021 – und
+danach eine Phase der Stagnation.
+
+<Diagramm
+  typ="balken"
+  daten={bip}
+  x="jahr"
+  y="wert"
+  farbe="rot"
+  einheit="%"
+  titel="Reales BIP-Wachstum"
+  untertitel="Veränderung gegenüber Vorjahr in Prozent"
+  quelle="Statistisches Bundesamt (Destatis) – Entwurfswerte, vor Veröffentlichung prüfen"
+/>
+
+## Einordnung
+
+Hier folgt der eigentliche Text des Artikels.

@@ -1,0 +1,28 @@
+---
+layout: ../../layouts/ArtikelLayout.astro
+titel: Wie viele Kinder bekommen Familien in Deutschland?
+beschreibung: Die Geburtenrate seit der Wiedervereinigung – ein Auf und Ab.
+kategorie: Familie
+datum: 2026-11-06
+---
+import Diagramm from '../../components/Diagramm.astro';
+import geburten from '../../data/geburtenrate.json';
+
+Nach der Wiedervereinigung brach die Geburtenrate vor allem in Ostdeutschland
+ein. Erst Mitte der 2010er-Jahre stieg sie wieder deutlich an – seit 2021 sinkt
+sie erneut.
+
+<Diagramm
+  typ="linie"
+  daten={geburten}
+  x="jahr"
+  y="wert"
+  farbe="gold"
+  titel="Zusammengefasste Geburtenziffer"
+  untertitel="Kinder je Frau, Deutschland"
+  quelle="Statistisches Bundesamt (Destatis) – Entwurfswerte, vor Veröffentlichung prüfen"
+/>
+
+## Was steckt dahinter?
+
+Hier folgt der eigentliche Text des Artikels.

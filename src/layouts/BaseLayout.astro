@@ -1,0 +1,77 @@
+---
+import '../styles/global.css';
+import { url } from '../lib/url';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const siteTitle = 'Familie, Wirtschaft und Diplomatie';
+const { title, description = 'Ein Blog über Deutschland in Zahlen.' } = Astro.props;
+const pageTitle = title ? `${title} · ${siteTitle}` : siteTitle;
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href={url('favicon.svg')} />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <div class="flagge" aria-hidden="true"><span></span><span></span><span></span></div>
+    <header class="container kopf">
+      <a href={url()} class="logo">{siteTitle}</a>
+      <p class="claim">Deutschland in Zahlen</p>
+    </header>
+
+    <main class="container">
+      <slot />
+    </main>
+
+    <footer class="container fuss">
+      <p>© {new Date().getFullYear()} · {siteTitle}</p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .flagge {
+    display: flex;
+    flex-direction: column;
+  }
+  .flagge span { height: 6px; }
+  .flagge span:nth-child(1) { background: #000; }
+  .flagge span:nth-child(2) { background: #dd0000; }
+  .flagge span:nth-child(3) { background: #ffcc00; }
+
+  .kopf {
+    padding-top: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+  .logo {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    font-weight: 700;
+    text-decoration: none;
+    line-height: 1.15;
+  }
+  .claim {
+    margin: 0.4rem 0 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .fuss {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    padding-bottom: 2.5rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+</style>

@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../lib/url';
+
+const dateien = import.meta.glob<{ frontmatter: Record<string, string> }>('./artikel/*.mdx', { eager: true });
+
+const artikel = Object.entries(dateien)
+  .map(([pfad, modul]) => ({
+    ...modul.frontmatter,
+    slug: pfad.replace('./', '').replace('.mdx', ''),
+  }))
+  .sort((a, b) => +new Date(b.datum) - +new Date(a.datum));
+
+const kategorien = ['Familie', 'Wirtschaft', 'Diplomatie'];
+---
+
+<BaseLayout>
+  <section class="intro">
+    <p>
+      Zahlen erzählen Geschichten. Hier geht es um Familien, die Wirtschaft und
+      die Außenbeziehungen Deutschlands – erklärt mit Daten und Grafiken.
+    </p>
+    <ul class="themen">
+      {kategorien.map((k) => <li class={`kat-${k.toLowerCase()}`}>{k}</li>)}
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="ueberschrift">Neueste Artikel</h2>
+    <ul class="liste">
+      {
+        artikel.map((a) => (
+          <li class={`kat-${a.kategorie.toLowerCase()}`}>
+            <a href={url(`artikel/${a.slug}/`)}>
+              <span class="kategorie">{a.kategorie}</span>
+              <h3>{a.titel}</h3>
+              <p>{a.beschreibung}</p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro p {
+    font-size: 1.15rem;
+    margin-top: 0;
+  }
+  .themen {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 1.25rem 0 3rem;
+  }
+  .themen li {
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 2px solid var(--kat-bg);
+  }
+  .ueberschrift {
+    font-size: 1.1rem;
+    font-family: var(--sans);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .liste {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  .liste li {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--kat-bg);
+    border-radius: 6px;
+    transition: transform 0.15s ease;
+  }
+  .liste li:hover { transform: translateX(4px); }
+  .liste a {
+    display: block;
+    padding: 1.1rem 1.25rem;
+    text-decoration: none;
+  }
+  .liste h3 {
+    margin: 0.25rem 0 0.3rem;
+    font-size: 1.3rem;
+  }
+  .liste p {
+    margin: 0;
+    color: var(--muted);
+  }
+</style>

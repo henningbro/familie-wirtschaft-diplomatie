@@ -1,0 +1,118 @@
+---
+/**
+ * Interaktives Diagramm mit Observable Plot.
+ *
+ * Beispiel:
+ *   <Diagramm typ="linie" daten={geburten} x="jahr" y="wert" farbe="gold"
+ *             titel="..." quelle="Destatis" />
+ */
+interface Props {
+  typ: 'linie' | 'balken' | 'balken-horizontal';
+  daten: Record<string, unknown>[];
+  x: string;
+  y: string;
+  titel: string;
+  untertitel?: string;
+  quelle?: string;
+  farbe?: 'schwarz' | 'rot' | 'gold';
+  einheit?: string;
+}
+
+const { titel, untertitel, quelle, ...konfig } = Astro.props;
+---
+
+<figure class="diagramm">
+  <figcaption>
+    <strong>{titel}</strong>
+    {untertitel && <span>{untertitel}</span>}
+  </figcaption>
+  <div class="plot" data-plot={JSON.stringify(konfig)}></div>
+  {quelle && <p class="quelle">Quelle: {quelle}</p>}
+</figure>
+
+<script>
+  import * as Plot from '@observablehq/plot';
+
+  const farbVariablen = { schwarz: '--schwarz', rot: '--rot', gold: '--gold' } as const;
+
+  function zeichne(el: HTMLElement) {
+    const k = JSON.parse(el.dataset.plot!);
+    const css = getComputedStyle(document.documentElement);
+    const farbe = css.getPropertyValue(farbVariablen[k.farbe as keyof typeof farbVariablen] ?? '--rot').trim();
+    const breite = el.clientWidth;
+    const zahl = (d: number) => d.toLocaleString('de-DE') + (k.einheit ? ` ${k.einheit}` : '');
+
+    let marks;
+    let extra = {};
+    if (k.typ === 'linie') {
+      marks = [
+        Plot.ruleY([0], { stroke: 'currentColor', strokeOpacity: 0.2 }),
+        Plot.lineY(k.daten, { x: k.x, y: k.y, stroke: farbe, strokeWidth: 2.5 }),
+        Plot.dot(k.daten, { x: k.x, y: k.y, fill: farbe, r: 3 }),
+        Plot.tip(k.daten, Plot.pointerX({ x: k.x, y: k.y, title: (d) => `${d[k.x]}: ${zahl(d[k.y])}` })),
+      ];
+      extra = { x: { tickFormat: 'd', label: null }, y: { grid: true, label: null } };
+    } else if (k.typ === 'balken') {
+      marks = [
+        Plot.barY(k.daten, { x: k.x, y: k.y, fill: (d) => (d[k.y] < 0 ? css.getPropertyValue('--muted').trim() : farbe) }),
+        Plot.ruleY([0]),
+        Plot.tip(k.daten, Plot.pointerX({ x: k.x, y: k.y, title: (d) => `${d[k.x]}: ${zahl(d[k.y])}` })),
+      ];
+      // Auf schmalen Bildschirmen Jahreszahlen kürzen ("2020" → "'20")
+      const kurz = breite < 500 ? (d: string) => `'${String(d).slice(-2)}` : undefined;
+      extra = { x: { type: 'band', label: null, tickFormat: kurz }, y: { grid: true, label: null } };
+    } else {
+      marks = [
+        Plot.barX(k.daten, { y: k.x, x: k.y, fill: farbe, sort: { y: '-x' } }),
+        Plot.text(k.daten, { y: k.x, x: k.y, text: (d) => zahl(d[k.y]), dx: 4, textAnchor: 'start' }),
+        Plot.ruleX([0]),
+      ];
+      extra = { y: { label: null }, x: { label: null, axis: null }, marginLeft: 110, marginRight: 70 };
+    }
+
+    el.replaceChildren(
+      Plot.plot({
+        width: breite,
+        height: Math.max(260, Math.min(400, breite * 0.6)),
+        style: { fontSize: '13px', background: 'transparent' },
+        locale: 'de-DE',
+        marks,
+        ...extra,
+      }),
+    );
+  }
+
+  const alle = document.querySelectorAll<HTMLElement>('[data-plot]');
+  alle.forEach(zeichne);
+
+  let breiteZuletzt = window.innerWidth;
+  window.addEventListener('resize', () => {
+    if (window.innerWidth === breiteZuletzt) return;
+    breiteZuletzt = window.innerWidth;
+    alle.forEach(zeichne);
+  });
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => alle.forEach(zeichne));
+</script>
+
+<style>
+  .diagramm {
+    margin: 2rem 0;
+    padding: 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  figcaption {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.75rem;
+  }
+  figcaption strong { font-size: 1.05rem; }
+  figcaption span { color: var(--muted); font-size: 0.9rem; }
+  .plot { min-height: 260px; }
+  .quelle {
+    margin: 0.5rem 0 0;
+    font-size: 0.78rem !important;
+    color: var(--muted);
+  }
+</style>

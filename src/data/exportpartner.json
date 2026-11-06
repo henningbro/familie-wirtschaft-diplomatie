@@ -1,0 +1,9 @@
+[
+  { "land": "USA", "wert": 253 },
+  { "land": "Frankreich", "wert": 118 },
+  { "land": "Niederlande", "wert": 112 },
+  { "land": "Polen", "wert": 100 },
+  { "land": "China", "wert": 90 },
+  { "land": "Italien", "wert": 89 },
+  { "land": "Österreich", "wert": 88 }
+]
