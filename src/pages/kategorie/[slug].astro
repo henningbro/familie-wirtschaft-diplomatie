@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArtikelListe from '../../components/ArtikelListe.astro';
+import KategorienNavi from '../../components/KategorienNavi.astro';
+import { kategorien, kategorieSlug } from '../../lib/kategorien';
+import { ladeArtikel } from '../../lib/artikel';
+
+export async function getStaticPaths() {
+  const alleArtikel = await ladeArtikel();
+  return kategorien
+    .map((k) => ({ k, artikel: alleArtikel.filter((a) => a.kategorien.includes(k)) }))
+    .filter(({ artikel }) => artikel.length > 0)
+    .map(({ k, artikel }) => ({ params: { slug: kategorieSlug(k) }, props: { kategorie: k, artikel } }));
+}
+
+const { kategorie, artikel } = Astro.props;
+---
+
+<BaseLayout title={kategorie} description={`Artikel zur Kategorie ${kategorie}.`}>
+  <KategorienNavi aktiv={kategorie} />
+  <section>
+    <h2 class="ueberschrift">{kategorie}</h2>
+    <ArtikelListe artikel={artikel} />
+  </section>
+</BaseLayout>
+
+<style>
+  .ueberschrift {
+    font-size: 1.1rem;
+    font-family: var(--sans);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+</style>

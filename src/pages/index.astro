@@ -1,19 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { url } from '../lib/url';
+import ArtikelListe from '../components/ArtikelListe.astro';
+import KategorienNavi from '../components/KategorienNavi.astro';
+import { ladeArtikel } from '../lib/artikel';
 
-const dateien = import.meta.glob<{ frontmatter: Record<string, string> }>('./artikel/*.mdx', { eager: true });
-
-const artikel = Object.entries(dateien)
-  .map(([pfad, modul]) => ({
-    ...modul.frontmatter,
-    slug: pfad.split('/').pop()!.replace('.mdx', ''),
-  }))
-  .sort((a, b) => +new Date(b.datum) - +new Date(a.datum));
-
-const formatiere = (d: string) =>
-  new Date(d).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
-
+const artikel = await ladeArtikel();
 ---
 
 <BaseLayout>
@@ -24,66 +15,24 @@ const formatiere = (d: string) =>
     </p>
   </section>
 
+  <KategorienNavi />
+
   <section>
     <h2 class="ueberschrift">Neueste Artikel</h2>
-    <ul class="liste">
-      {
-        artikel.map((a) => (
-          <li>
-            <a href={url(`artikel/${a.slug}/`)}>
-              <time class="datum" datetime={new Date(a.datum).toISOString().slice(0, 10)}>{formatiere(a.datum)}</time>
-              <h3>{a.titel}</h3>
-              <p>{a.beschreibung}</p>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    <ArtikelListe artikel={artikel} />
   </section>
 </BaseLayout>
 
 <style>
   .intro p {
     font-size: 1.15rem;
-    margin: 0 0 3rem;
+    margin: 0 0 1.5rem;
   }
   .ueberschrift {
     font-size: 1.1rem;
     font-family: var(--sans);
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: var(--muted);
-  }
-  .liste {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    gap: 1rem;
-  }
-  .liste li {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    transition: transform 0.15s ease;
-  }
-  .liste li:hover { transform: translateX(4px); }
-  .liste a {
-    display: block;
-    padding: 1.1rem 1.25rem;
-    text-decoration: none;
-  }
-  .liste .datum {
-    font-family: var(--sans);
-    font-size: 0.85rem;
-    color: var(--muted);
-  }
-  .liste h3 {
-    margin: 0.25rem 0 0.3rem;
-    font-size: 1.3rem;
-  }
-  .liste p {
-    margin: 0;
     color: var(--muted);
   }
 </style>

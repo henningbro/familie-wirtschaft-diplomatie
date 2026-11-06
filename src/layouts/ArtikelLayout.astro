@@ -1,6 +1,9 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import { url } from '../lib/url';
+import ArtikelListe from '../components/ArtikelListe.astro';
+import { kategorieSlug, pruefeKategorien } from '../lib/kategorien';
+import { ladeArtikel, verwandteArtikel } from '../lib/artikel';
 
 const { frontmatter } = Astro.props;
 const formatiere = (d: string) =>
@@ -12,13 +15,22 @@ const erstellt = new Date(frontmatter.datum).toDateString();
 const aenderungen: { datum: string; beschreibung: string }[] = (frontmatter.aenderungen ?? [])
   .filter((a: { datum: string }) => new Date(a.datum).toDateString() !== erstellt)
   .sort((a: { datum: string }, b: { datum: string }) => +new Date(b.datum) - +new Date(a.datum));
+
+const slug = Astro.url.pathname.replace(/\/$/, '').split('/').pop()!;
+const kategorien = pruefeKategorien(frontmatter.kategorien, slug);
+const verwandte = verwandteArtikel(await ladeArtikel(), slug, kategorien);
 ---
 
 <BaseLayout title={frontmatter.titel} description={frontmatter.beschreibung}>
-  <!-- data-pagefind-*: nur Artikel kommen in den Suchindex, Datum als Zusatzinfo -->
+  <!-- data-pagefind-*: nur Artikel kommen in den Suchindex, Datum und Kategorien als Zusatzinfo -->
   <article data-pagefind-body>
     <h1 data-pagefind-meta="title">{frontmatter.titel}</h1>
     <p class="meta" data-pagefind-ignore>Erstellt am <span data-pagefind-meta="datum">{formatiere(frontmatter.datum)}</span></p>
+    <ul class="kategorien" data-pagefind-ignore>
+      {kategorien.map((k) => (
+        <li><a href={url(`kategorie/${kategorieSlug(k)}/`)} data-pagefind-filter="kategorie">{k}</a></li>
+      ))}
+    </ul>
     <div class="inhalt">
       <slot />
     </div>
@@ -36,7 +48,15 @@ const aenderungen: { datum: string; beschreibung: string }[] = (frontmatter.aend
         </section>
       )
     }
-    <p data-pagefind-ignore><a href={url()}>← Alle Artikel</a></p>
+    {
+      verwandte.length > 0 && (
+        <section class="verwandte" data-pagefind-ignore>
+          <h2>Weitere Artikel zu diesen Kategorien</h2>
+          <ArtikelListe artikel={verwandte} />
+        </section>
+      )
+    }
+    <p class="zurueck" data-pagefind-ignore><a href={url()}>← Alle Artikel</a></p>
   </article>
 </BaseLayout>
 
@@ -48,8 +68,41 @@ const aenderungen: { datum: string; beschreibung: string }[] = (frontmatter.aend
   .meta {
     color: var(--muted);
     font-size: 0.9rem;
+    margin: 0 0 0.75rem;
+  }
+  .kategorien {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    list-style: none;
+    padding: 0;
     margin: 0 0 2rem;
   }
+  .kategorien a {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.1rem 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    text-decoration: none;
+    color: var(--muted);
+  }
+  .kategorien a:hover { border-color: var(--muted); color: var(--text); }
+  .verwandte {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+  .verwandte h2 {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin: 0 0 1rem;
+  }
+  .zurueck { margin-top: 2rem; }
   .inhalt :global(p) { font-size: 1.08rem; }
   .inhalt :global(h2) { margin-top: 2.5rem; }
   .protokoll {

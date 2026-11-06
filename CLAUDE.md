@@ -9,6 +9,9 @@ veröffentlicht über GitHub Pages (Push auf `main` → automatischer Deploy).
 - Daten: `src/data/<name>.json`
 - Diagramme: `<Diagramm typ="…" daten={…} x="…" y="…" farbe="…" titel="…" quelle="…" />`
   (siehe `src/components/Diagramm.astro`)
+- Kategorien: Frontmatter `kategorien: [Rente, Staatsfinanzen]` (eine oder mehrere);
+  erlaubte Werte stehen in `src/lib/kategorien.ts`, unbekannte brechen den Build ab.
+  Unter jedem Artikel erscheinen automatisch weitere Artikel mit gemeinsamen Kategorien.
 - Suche: Pagefind (`src/components/Suche.astro`), Index entsteht in `npm run build`;
   funktioniert nur mit `npm run build && npm run preview`, nicht im Dev-Server
 - Vor jedem Commit: `npm run build` muss fehlerfrei durchlaufen.
