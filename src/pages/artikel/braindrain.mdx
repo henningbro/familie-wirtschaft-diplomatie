@@ -1,0 +1,90 @@
+---
+layout: ../../layouts/ArtikelLayout.astro
+titel: Hochschulabsolventen und Fortzüge Deutscher ins Ausland
+beschreibung: Wie sich die Zahl der Menschen, die in Deutschland erstmals einen Hochschulabschluss erwerben, und die Zahl der Fortzüge deutscher Staatsangehöriger ins Ausland von 2005 bis 2024 entwickelt haben, warum sich die Abwanderung von Akademikern nicht direkt messen lässt und wie viele Deutsche in der Schweiz leben.
+kategorien: [Bildung, Migration, Bevölkerung]
+datum: 2026-11-06
+---
+import Diagramm from '../../components/Diagramm.astro';
+import daten from '../../data/braindrain.json';
+import deutscheSchweiz from '../../data/deutsche-in-der-schweiz.json';
+
+Unter „Braindrain“ versteht man die Abwanderung gut ausgebildeter Menschen ins
+Ausland. Das Diagramm stellt die Zahl der Menschen, die an deutschen Hochschulen
+erstmals einen Abschluss erwerben, der Zahl der Fortzüge deutscher
+Staatsangehöriger ins Ausland gegenüber, in Tausend, von 2005 bis 2024.
+
+- **Erstabsolventen:** Personen, die ihren ersten Hochschulabschluss erwerben,
+  etwa Bachelor, Diplom, Magister oder Staatsexamen. Wer danach noch einen
+  Master oder eine Promotion abschließt, wird nicht erneut gezählt.
+- **Fortzüge Deutscher ins Ausland:** Abmeldungen deutscher Staatsangehöriger
+  mit Ziel Ausland je Kalenderjahr, unabhängig von Alter und Bildungsabschluss.
+
+## Was die Zahlen nicht zeigen
+
+Wie viele Menschen mit Hochschulabschluss jedes Jahr auswandern, wird amtlich
+nicht erfasst. Die Wanderungsstatistik des Statistischen Bundesamts enthält
+keine Angaben zum Bildungs- oder Berufsabschluss, wie die Bundesregierung in
+einer [Antwort auf eine Kleine Anfrage (Drucksache 20/12277)](https://dserver.bundestag.de/btd/20/122/2012277.pdf)
+bestätigt (abgerufen am 6. November 2026). Die zweite Linie zeigt deshalb alle
+Fortzüge Deutscher, also auch Kinder, Rentnerinnen und Rentner sowie Menschen
+ohne Hochschulabschluss. Fortzüge sind zudem keine Nettoabwanderung: Im selben
+Zeitraum ziehen auch Deutsche aus dem Ausland zurück.
+
+Bei den Erstabsolventen hat das Statistische Bundesamt die Abgrenzung der
+Abschlüsse ab 2013 auf eine neue internationale Bildungsklassifikation (ISCED
+2011) umgestellt.
+
+Die Fortzüge ab 2016 sind wegen methodischer Änderungen in der
+Wanderungsstatistik nur bedingt mit den Jahren davor vergleichbar. Auch die
+Jahre 2008 bis 2010 (Bereinigung der Melderegister nach Einführung der
+Steuer-Identifikationsnummer), 2019 (Abmeldungen von Amts wegen im Zuge der
+Europawahl) und ab 2020 (eingeschränkter Publikumsverkehr der Meldebehörden
+während der Corona-Pandemie) sind laut Statistischem Bundesamt nur eingeschränkt
+vergleichbar.
+
+<Diagramm
+  typ="linie"
+  daten={daten}
+  x="jahr"
+  y="wert"
+  serie="gruppe"
+  serienFarben={{
+    'Erstabsolventen': 'gold',
+    'Fortzüge Deutscher ins Ausland': 'schwarz',
+  }}
+  einheit="Tsd."
+  titel="Hochschulabsolventen und Fortzüge Deutscher ins Ausland"
+  untertitel="In Tausend, 2005–2024"
+  quelle="Destatis, Wanderungen zwischen Deutschland und dem Ausland (Stand 1. Juni 2026), und Destatis, Sonderauswertung Erstabsolventen, veröffentlicht im Datenportal des BMFTR, Tabelle 1.9.5 (Stand 28. Januar 2026)"
+  quelleUrl="https://www.destatis.de/DE/Themen/Gesellschaft-Umwelt/Bevoelkerung/Wanderungen/Tabellen/wanderungen-zwischen-deutschland-und-dem-ausland-jahr-02.html"
+  abgerufen="2026-11-06"
+/>
+
+Die Zahlen zu den Erstabsolventen stammen aus
+[Tabelle 1.9.5 im Datenportal des Bundesministeriums für Forschung, Technologie und Raumfahrt](https://www.datenportal.bmbf.de/portal/de/Tabelle-1.9.5.html),
+einer Sonderauswertung des Statistischen Bundesamts (abgerufen am 6. November
+2026).
+
+## Deutsche in der Schweiz
+
+Das zweite Diagramm zeigt die Zahl der deutschen Staatsangehörigen in der ständigen
+Wohnbevölkerung der Schweiz, in Tausend, jeweils zum Jahresende von 2010 bis
+2025. Zur ständigen Wohnbevölkerung zählen Personen mit einem Wohnsitz in der
+Schweiz von mindestens zwölf Monaten. Wer neben der deutschen auch die
+schweizerische Staatsangehörigkeit besitzt, wird in der Schweizer Statistik als
+Schweizerin oder Schweizer gezählt und ist hier nicht enthalten.
+
+<Diagramm
+  typ="balken"
+  daten={deutscheSchweiz}
+  x="jahr"
+  y="wert"
+  farbe="rot"
+  einheit="Tsd."
+  titel="Deutsche Staatsangehörige in der Schweiz"
+  untertitel="Ständige Wohnbevölkerung in Tausend, jeweils zum 31. Dezember, 2010–2025"
+  quelle="Bundesamt für Statistik (BFS), Statistik der Bevölkerung und der Haushalte (STATPOP), Ständige und nichtständige Wohnbevölkerung nach Staatsangehörigkeit"
+  quelleUrl="https://www.pxweb.bfs.admin.ch/pxweb/de/px-x-0103010000_101/-/px-x-0103010000_101.px/"
+  abgerufen="2026-11-06"
+/>
