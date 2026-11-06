@@ -1,28 +1,40 @@
 ---
 layout: ../../layouts/ArtikelLayout.astro
-titel: Wie viele Kinder bekommen Familien in Deutschland?
-beschreibung: Die Geburtenrate seit der Wiedervereinigung – ein Auf und Ab.
+titel: Geburtenrate in Deutschland und Ungarn seit 2000
+beschreibung: Die zusammengefasste Geburtenziffer in Deutschland und Ungarn von 2000 bis 2024.
 kategorie: Familie
 datum: 2026-11-06
 ---
 import Diagramm from '../../components/Diagramm.astro';
 import geburten from '../../data/geburtenrate.json';
 
-Nach der Wiedervereinigung brach die Geburtenrate vor allem in Ostdeutschland
-ein. Erst Mitte der 2010er-Jahre stieg sie wieder deutlich an – seit 2021 sinkt
-sie erneut.
+Die zusammengefasste Geburtenziffer gibt an, wie viele Kinder eine Frau im Laufe
+ihres Lebens bekäme, wenn die Geburtenverhältnisse eines Jahres dauerhaft gälten.
+Das Diagramm zeigt ihre Entwicklung in Deutschland und Ungarn von 2000 bis 2024.
 
 <Diagramm
   typ="linie"
   daten={geburten}
   x="jahr"
   y="wert"
-  farbe="gold"
+  serie="land"
+  serienFarben={{ Deutschland: 'gold', Ungarn: '#477050' }}
   titel="Zusammengefasste Geburtenziffer"
-  untertitel="Kinder je Frau, Deutschland"
-  quelle="Statistisches Bundesamt (Destatis) – Entwurfswerte, vor Veröffentlichung prüfen"
+  untertitel="Kinder je Frau, 2000–2024"
+  quelle="Eurostat, Datensatz demo_find"
+  quelleUrl="https://ec.europa.eu/eurostat/databrowser/view/demo_find/default/table?lang=de"
+  abgerufen="2026-11-06"
+  ereignisse={[
+    {
+      x: 2020,
+      farbe: '#477050',
+      text: 'Ungarn, 1. Januar 2020: Mütter, die vier oder mehr Kinder großziehen oder großgezogen haben, werden von der Einkommensteuer auf bestimmte Einkünfte (vor allem Arbeitseinkommen) befreit.',
+      quelle: 'PwC Worldwide Tax Summaries, Hungary – Deductions',
+      quelleUrl: 'https://taxsummaries.pwc.com/hungary/individual/deductions',
+      abgerufen: '2026-11-06',
+    },
+  ]}
 />
 
-## Was steckt dahinter?
-
-Hier folgt der eigentliche Text des Artikels.
+Die Markierung zeigt nur den Zeitpunkt der Maßnahme. Ob und wie stark sie die
+Geburtenziffer beeinflusst hat, lässt sich aus dem Diagramm nicht ablesen.

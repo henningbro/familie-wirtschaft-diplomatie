@@ -4,7 +4,7 @@
  *
  * Beispiel:
  *   <Diagramm typ="linie" daten={geburten} x="jahr" y="wert" farbe="gold"
- *             titel="..." quelle="Destatis" />
+ *             titel="..." quelle="Destatis" quelleUrl="https://…" abgerufen="2026-11-06" />
  */
 interface Props {
   typ: 'linie' | 'balken' | 'balken-horizontal';
@@ -13,12 +13,32 @@ interface Props {
   y: string;
   titel: string;
   untertitel?: string;
-  quelle?: string;
+  quelle: string;
+  quelleUrl: string;
+  /** Abrufdatum der Quelle im Format JJJJ-MM-TT */
+  abgerufen: string;
   farbe?: 'schwarz' | 'rot' | 'gold';
+  /** Nur bei typ="linie": Feld, nach dem die Daten in mehrere Linien aufgeteilt werden */
+  serie?: string;
+  /** Farbe je Linie, z. B. { Deutschland: 'gold', Ungarn: '#477050' } */
+  serienFarben?: Record<string, string>;
   einheit?: string;
+  /** Markierte Ereignisse, z. B. Inkrafttreten eines Gesetzes. `x` ist der Wert auf der x-Achse (z. B. Jahr oder "JJJJ-MM"). */
+  ereignisse?: {
+    x: number | string;
+    text: string;
+    farbe?: string;
+    quelle: string;
+    quelleUrl: string;
+    abgerufen: string;
+  }[];
 }
 
-const { titel, untertitel, quelle, ...konfig } = Astro.props;
+const { titel, untertitel, quelle, quelleUrl, abgerufen, ereignisse = [], ...rest } = Astro.props;
+const datum = (d: string) => new Date(d).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+const abrufdatum = datum(abgerufen);
+// Für das Zeichnen reichen Position, Farbe und Nummer; der Text steht unter dem Diagramm
+const konfig = { ...rest, ereignisse: ereignisse.map((e, i) => ({ x: e.x, farbe: e.farbe, nr: i + 1 })) };
 ---
 
 <figure class="diagramm">
@@ -27,7 +47,23 @@ const { titel, untertitel, quelle, ...konfig } = Astro.props;
     {untertitel && <span>{untertitel}</span>}
   </figcaption>
   <div class="plot" data-plot={JSON.stringify(konfig)}></div>
-  {quelle && <p class="quelle">Quelle: {quelle}</p>}
+  {
+    ereignisse.length > 0 && (
+      <ol class="ereignisse">
+        {ereignisse.map((e) => (
+          <li>
+            {e.text}{' '}
+            <span class="quelle">
+              (Quelle: <a href={e.quelleUrl} target="_blank" rel="noopener">{e.quelle}</a>, abgerufen am {datum(e.abgerufen)})
+            </span>
+          </li>
+        ))}
+      </ol>
+    )
+  }
+  <p class="quelle">
+    Quelle{ereignisse.length > 0 && ' der Daten'}: <a href={quelleUrl} target="_blank" rel="noopener">{quelle}</a>, abgerufen am {abrufdatum}
+  </p>
 </figure>
 
 <script>
@@ -38,20 +74,56 @@ const { titel, untertitel, quelle, ...konfig } = Astro.props;
   function zeichne(el: HTMLElement) {
     const k = JSON.parse(el.dataset.plot!);
     const css = getComputedStyle(document.documentElement);
-    const farbe = css.getPropertyValue(farbVariablen[k.farbe as keyof typeof farbVariablen] ?? '--rot').trim();
+    const farbwert = (f: string) =>
+      f in farbVariablen ? css.getPropertyValue(farbVariablen[f as keyof typeof farbVariablen]).trim() : f;
+    const farbe = farbwert(k.farbe ?? 'rot');
     const breite = el.clientWidth;
     const zahl = (d: number) => d.toLocaleString('de-DE') + (k.einheit ? ` ${k.einheit}` : '');
+    // Achsen im deutschen Format: Komma als Dezimaltrennzeichen, echtes Minuszeichen
+    const achse = (d: number) => d.toLocaleString('de-DE').replace('-', '−');
 
     let marks;
     let extra = {};
-    if (k.typ === 'linie') {
+    if (k.typ === 'linie' && k.serie) {
+      // Mehrere Linien mit Legende über dem Diagramm
+      const namen = Object.keys(k.serienFarben ?? {});
+      marks = [
+        Plot.ruleY([0], { stroke: 'currentColor', strokeOpacity: 0.2 }),
+        Plot.lineY(k.daten, { x: k.x, y: k.y, stroke: k.serie, strokeWidth: 2.5 }),
+        Plot.dot(k.daten, { x: k.x, y: k.y, fill: k.serie, r: 2.5 }),
+        Plot.tip(k.daten, Plot.pointer({ x: k.x, y: k.y, title: (d) => `${d[k.serie]}, ${d[k.x]}: ${zahl(d[k.y])}` })),
+      ];
+      extra = {
+        x: { tickFormat: 'd', label: null },
+        y: { grid: true, label: null, tickFormat: achse },
+        color: { domain: namen, range: namen.map((n) => farbwert(k.serienFarben[n])), legend: true },
+      };
+    } else if (k.typ === 'linie' && /^\d{4}-\d{2}$/.test(String(k.daten[0]?.[k.x]))) {
+      // Monatswerte im Format "JJJJ-MM": Zeitachse mit Jahren, Tooltip mit Monatsnamen
+      const zuDatum = (v: unknown) => {
+        const [j, m] = String(v).split('-').map(Number);
+        return new Date(j, m - 1, 1);
+      };
+      const daten = k.daten.map((d) => ({ ...d, [k.x]: zuDatum(d[k.x]) }));
+      k.ereignisse = (k.ereignisse ?? []).map((e) => ({ ...e, x: zuDatum(e.x) }));
+      const monat = (d: Date) => d.toLocaleDateString('de-DE', { month: 'long', year: 'numeric' });
+      marks = [
+        Plot.ruleY([0], { stroke: 'currentColor', strokeOpacity: 0.2 }),
+        Plot.lineY(daten, { x: k.x, y: k.y, stroke: farbe, strokeWidth: 2 }),
+        Plot.tip(daten, Plot.pointerX({ x: k.x, y: k.y, title: (d) => `${monat(d[k.x])}: ${zahl(d[k.y])}` })),
+      ];
+      extra = {
+        x: { type: 'time', label: null, tickFormat: (d: Date) => String(d.getFullYear()) },
+        y: { grid: true, label: null, tickFormat: achse },
+      };
+    } else if (k.typ === 'linie') {
       marks = [
         Plot.ruleY([0], { stroke: 'currentColor', strokeOpacity: 0.2 }),
         Plot.lineY(k.daten, { x: k.x, y: k.y, stroke: farbe, strokeWidth: 2.5 }),
         Plot.dot(k.daten, { x: k.x, y: k.y, fill: farbe, r: 3 }),
         Plot.tip(k.daten, Plot.pointerX({ x: k.x, y: k.y, title: (d) => `${d[k.x]}: ${zahl(d[k.y])}` })),
       ];
-      extra = { x: { tickFormat: 'd', label: null }, y: { grid: true, label: null } };
+      extra = { x: { tickFormat: 'd', label: null }, y: { grid: true, label: null, tickFormat: achse } };
     } else if (k.typ === 'balken') {
       marks = [
         Plot.barY(k.daten, { x: k.x, y: k.y, fill: (d) => (d[k.y] < 0 ? css.getPropertyValue('--muted').trim() : farbe) }),
@@ -60,14 +132,23 @@ const { titel, untertitel, quelle, ...konfig } = Astro.props;
       ];
       // Auf schmalen Bildschirmen Jahreszahlen kürzen ("2020" → "'20")
       const kurz = breite < 500 ? (d: string) => `'${String(d).slice(-2)}` : undefined;
-      extra = { x: { type: 'band', label: null, tickFormat: kurz }, y: { grid: true, label: null } };
+      extra = { x: { type: 'band', label: null, tickFormat: kurz }, y: { grid: true, label: null, tickFormat: achse } };
     } else {
       marks = [
         Plot.barX(k.daten, { y: k.x, x: k.y, fill: farbe, sort: { y: '-x' } }),
         Plot.text(k.daten, { y: k.x, x: k.y, text: (d) => zahl(d[k.y]), dx: 4, textAnchor: 'start' }),
         Plot.ruleX([0]),
       ];
-      extra = { y: { label: null }, x: { label: null, axis: null }, marginLeft: 110, marginRight: 70 };
+      extra = { y: { label: null }, x: { label: null, axis: null }, marginLeft: 110, marginRight: 95 };
+    }
+
+    // Ereignisse: gestrichelte Linie mit Nummer, Erläuterung steht unter dem Diagramm
+    for (const e of k.ereignisse ?? []) {
+      const f = farbwert(e.farbe ?? 'schwarz');
+      marks.push(
+        Plot.ruleX([e.x], { stroke: f, strokeDasharray: '4,3', strokeWidth: 1.5 }),
+        Plot.text([e.x], { x: (d) => d, frameAnchor: 'top', text: () => String(e.nr), dy: -16, fill: 'white', stroke: f, strokeWidth: 9, fontWeight: 700, paintOrder: 'stroke' }),
+      );
     }
 
     el.replaceChildren(
@@ -78,6 +159,8 @@ const { titel, untertitel, quelle, ...konfig } = Astro.props;
         locale: 'de-DE',
         marks,
         ...extra,
+        // Platz über dem Diagramm für die Ereignis-Nummern
+        ...(k.ereignisse?.length ? { marginTop: 34 } : {}),
       }),
     );
   }
@@ -110,6 +193,12 @@ const { titel, untertitel, quelle, ...konfig } = Astro.props;
   figcaption strong { font-size: 1.05rem; }
   figcaption span { color: var(--muted); font-size: 0.9rem; }
   .plot { min-height: 260px; }
+  .ereignisse {
+    margin: 0.75rem 0 0;
+    padding-left: 1.4rem;
+    font-size: 0.88rem;
+  }
+  .ereignisse .quelle { display: inline; }
   .quelle {
     margin: 0.5rem 0 0;
     font-size: 0.78rem !important;

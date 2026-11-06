@@ -1,9 +1,6 @@
 [
-  { "land": "USA", "wert": 253 },
-  { "land": "Frankreich", "wert": 118 },
-  { "land": "Niederlande", "wert": 112 },
-  { "land": "Polen", "wert": 100 },
-  { "land": "China", "wert": 90 },
-  { "land": "Italien", "wert": 89 },
-  { "land": "Österreich", "wert": 88 }
+  { "land": "USA", "wert": 146.2 },
+  { "land": "Frankreich", "wert": 117.4 },
+  { "land": "Niederlande", "wert": 112.5 },
+  { "land": "China", "wert": 81.3 }
 ]

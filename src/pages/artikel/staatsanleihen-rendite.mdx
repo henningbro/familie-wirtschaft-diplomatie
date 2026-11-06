@@ -1,0 +1,45 @@
+---
+layout: ../../layouts/ArtikelLayout.astro
+titel: Rendite deutscher Staatsanleihen seit 2000
+beschreibung: Die Rendite zehnjähriger Bundeswertpapiere als Monatswerte von Januar 2000 bis Oktober 2026.
+kategorie: Wirtschaft
+datum: 2026-11-06
+---
+import Diagramm from '../../components/Diagramm.astro';
+import rendite from '../../data/staatsanleihen-rendite.json';
+
+Die Rendite von Bundesanleihen gibt an, welchen Zins der Bund Anlegern für neu
+aufgenommene Schulden ungefähr zahlen muss. Sie gilt zugleich als Richtwert für
+andere langfristige Zinsen, etwa für Baukredite.
+
+Das Diagramm zeigt die Rendite börsennotierter Bundeswertpapiere mit einer
+Restlaufzeit von zehn Jahren als Monatswerte in Prozent, von Januar 2000 bis
+Oktober 2026. Die Werte berechnet die Deutsche Bundesbank aus der
+Zinsstrukturkurve nach der Svensson-Methode. Liegt die Linie unter null, erhielten
+Anleger beim Halten bis zur Fälligkeit weniger zurück, als sie gezahlt hatten.
+
+Die gestrichelte Linie markiert die Änderung der Schuldenbremse im Grundgesetz
+im März 2025.
+
+<Diagramm
+  typ="linie"
+  daten={rendite}
+  x="monat"
+  y="wert"
+  farbe="rot"
+  einheit="%"
+  titel="Rendite zehnjähriger Bundeswertpapiere"
+  untertitel="Monatswerte in Prozent, Januar 2000 bis Oktober 2026"
+  quelle="Deutsche Bundesbank, Zeitreihe BBSIS.M.I.ZST.ZI.EUR.S1311.B.A604.R10XX.R.A.A._Z._Z.A"
+  quelleUrl="https://www.bundesbank.de/dynamic/action/de/statistiken/zeitreihen-datenbanken/zeitreihen-datenbank/759784/759784?tsId=BBSIS.M.I.ZST.ZI.EUR.S1311.B.A604.R10XX.R.A.A._Z._Z.A"
+  abgerufen="2026-11-06"
+  ereignisse={[
+    {
+      x: '2025-03',
+      text: 'März 2025: Bundestag (18. März) und Bundesrat (21. März) beschließen eine Änderung der Schuldenbremse im Grundgesetz (Artikel 109, 115 und 143h). Verteidigungsausgaben ab einer bestimmten Höhe werden von der Schuldenbremse ausgenommen, ein kreditfinanziertes Sondervermögen für Infrastruktur und Klimaneutralität wird ermöglicht, und die Länder erhalten einen eigenen Verschuldungsspielraum. Beschlossen hat dies noch der 20. Deutsche Bundestag, vor der Wahl von Friedrich Merz zum Bundeskanzler am 6. Mai 2025.',
+      quelle: 'Bundesgesetzblatt 2025 I Nr. 94',
+      quelleUrl: 'https://www.recht.bund.de/bgbl/1/2025/94/VO.html',
+      abgerufen: '2026-11-06',
+    },
+  ]}
+/>

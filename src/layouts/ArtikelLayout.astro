@@ -3,11 +3,15 @@ import BaseLayout from './BaseLayout.astro';
 import { url } from '../lib/url';
 
 const { frontmatter } = Astro.props;
-const datum = new Date(frontmatter.datum).toLocaleDateString('de-DE', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric',
-});
+const formatiere = (d: string) =>
+  new Date(d).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+
+// Änderungsprotokoll: ein Eintrag pro Tag, neueste zuerst.
+// Änderungen am Erstellungstag gehören zur Erstellung und werden nicht aufgeführt.
+const erstellt = new Date(frontmatter.datum).toDateString();
+const aenderungen: { datum: string; beschreibung: string }[] = (frontmatter.aenderungen ?? [])
+  .filter((a: { datum: string }) => new Date(a.datum).toDateString() !== erstellt)
+  .sort((a: { datum: string }, b: { datum: string }) => +new Date(b.datum) - +new Date(a.datum));
 ---
 
 <BaseLayout title={frontmatter.titel} description={frontmatter.beschreibung}>
@@ -15,10 +19,24 @@ const datum = new Date(frontmatter.datum).toLocaleDateString('de-DE', {
   <article class={`kat-${frontmatter.kategorie.toLowerCase()}`} data-pagefind-body>
     <span class="kategorie" data-pagefind-ignore data-pagefind-filter="kategorie" data-pagefind-meta="kategorie">{frontmatter.kategorie}</span>
     <h1 data-pagefind-meta="title">{frontmatter.titel}</h1>
-    <p class="meta" data-pagefind-ignore><span data-pagefind-meta="datum">{datum}</span></p>
+    <p class="meta" data-pagefind-ignore>Erstellt am <span data-pagefind-meta="datum">{formatiere(frontmatter.datum)}</span></p>
     <div class="inhalt">
       <slot />
     </div>
+    {
+      aenderungen.length > 0 && (
+        <section class="protokoll" data-pagefind-ignore>
+          <h2>Änderungsprotokoll</h2>
+          <ul>
+            {aenderungen.map((a) => (
+              <li>
+                <strong>{formatiere(a.datum)}:</strong> {a.beschreibung}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
     <p data-pagefind-ignore><a href={url()}>← Alle Artikel</a></p>
   </article>
 </BaseLayout>
@@ -35,4 +53,19 @@ const datum = new Date(frontmatter.datum).toLocaleDateString('de-DE', {
   }
   .inhalt :global(p) { font-size: 1.08rem; }
   .inhalt :global(h2) { margin-top: 2.5rem; }
+  .protokoll {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .protokoll h2 {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 0 0 0.5rem;
+  }
+  .protokoll ul { padding-left: 1.1rem; margin: 0; }
 </style>

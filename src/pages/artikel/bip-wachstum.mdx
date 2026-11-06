@@ -1,15 +1,15 @@
 ---
 layout: ../../layouts/ArtikelLayout.astro
-titel: Ein Jahrzehnt deutsche Wirtschaft in einem Diagramm
-beschreibung: Reales Wachstum des Bruttoinlandsprodukts 2015 bis 2024.
+titel: Wirtschaftswachstum in Deutschland 2016 bis 2025
+beschreibung: Veränderung des preisbereinigten Bruttoinlandsprodukts gegenüber dem Vorjahr.
 kategorie: Wirtschaft
-datum: 2026-11-05
+datum: 2026-11-06
 ---
 import Diagramm from '../../components/Diagramm.astro';
 import bip from '../../data/bip-wachstum.json';
 
-Auf solide Jahre folgte der Corona-Einbruch 2020, die Erholung 2021 – und
-danach eine Phase der Stagnation.
+Das preisbereinigte Bruttoinlandsprodukt (BIP) misst die Wirtschaftsleistung
+ohne den Einfluss von Preisänderungen.
 
 <Diagramm
   typ="balken"
@@ -18,11 +18,9 @@ danach eine Phase der Stagnation.
   y="wert"
   farbe="rot"
   einheit="%"
-  titel="Reales BIP-Wachstum"
-  untertitel="Veränderung gegenüber Vorjahr in Prozent"
-  quelle="Statistisches Bundesamt (Destatis) – Entwurfswerte, vor Veröffentlichung prüfen"
+  titel="Bruttoinlandsprodukt, preisbereinigt"
+  untertitel="Veränderung gegenüber dem Vorjahr in Prozent"
+  quelle="Destatis, Pressemitteilung Nr. 017 vom 15. Januar 2026"
+  quelleUrl="https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/01/PD26_017_811.html"
+  abgerufen="2026-11-06"
 />
-
-## Einordnung
-
-Hier folgt der eigentliche Text des Artikels.

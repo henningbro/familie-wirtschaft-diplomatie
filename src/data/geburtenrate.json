@@ -1,15 +1,252 @@
 [
-  { "jahr": 1990, "wert": 1.45 },
-  { "jahr": 1995, "wert": 1.25 },
-  { "jahr": 2000, "wert": 1.38 },
-  { "jahr": 2005, "wert": 1.34 },
-  { "jahr": 2010, "wert": 1.39 },
-  { "jahr": 2015, "wert": 1.50 },
-  { "jahr": 2016, "wert": 1.59 },
-  { "jahr": 2018, "wert": 1.57 },
-  { "jahr": 2020, "wert": 1.53 },
-  { "jahr": 2021, "wert": 1.58 },
-  { "jahr": 2022, "wert": 1.46 },
-  { "jahr": 2023, "wert": 1.35 },
-  { "jahr": 2024, "wert": 1.35 }
+  {
+    "jahr": 2000,
+    "land": "Deutschland",
+    "wert": 1.38
+  },
+  {
+    "jahr": 2001,
+    "land": "Deutschland",
+    "wert": 1.35
+  },
+  {
+    "jahr": 2002,
+    "land": "Deutschland",
+    "wert": 1.34
+  },
+  {
+    "jahr": 2003,
+    "land": "Deutschland",
+    "wert": 1.34
+  },
+  {
+    "jahr": 2004,
+    "land": "Deutschland",
+    "wert": 1.36
+  },
+  {
+    "jahr": 2005,
+    "land": "Deutschland",
+    "wert": 1.34
+  },
+  {
+    "jahr": 2006,
+    "land": "Deutschland",
+    "wert": 1.33
+  },
+  {
+    "jahr": 2007,
+    "land": "Deutschland",
+    "wert": 1.37
+  },
+  {
+    "jahr": 2008,
+    "land": "Deutschland",
+    "wert": 1.38
+  },
+  {
+    "jahr": 2009,
+    "land": "Deutschland",
+    "wert": 1.36
+  },
+  {
+    "jahr": 2010,
+    "land": "Deutschland",
+    "wert": 1.39
+  },
+  {
+    "jahr": 2011,
+    "land": "Deutschland",
+    "wert": 1.39
+  },
+  {
+    "jahr": 2012,
+    "land": "Deutschland",
+    "wert": 1.41
+  },
+  {
+    "jahr": 2013,
+    "land": "Deutschland",
+    "wert": 1.42
+  },
+  {
+    "jahr": 2014,
+    "land": "Deutschland",
+    "wert": 1.47
+  },
+  {
+    "jahr": 2015,
+    "land": "Deutschland",
+    "wert": 1.5
+  },
+  {
+    "jahr": 2016,
+    "land": "Deutschland",
+    "wert": 1.6
+  },
+  {
+    "jahr": 2017,
+    "land": "Deutschland",
+    "wert": 1.57
+  },
+  {
+    "jahr": 2018,
+    "land": "Deutschland",
+    "wert": 1.57
+  },
+  {
+    "jahr": 2019,
+    "land": "Deutschland",
+    "wert": 1.54
+  },
+  {
+    "jahr": 2020,
+    "land": "Deutschland",
+    "wert": 1.53
+  },
+  {
+    "jahr": 2021,
+    "land": "Deutschland",
+    "wert": 1.58
+  },
+  {
+    "jahr": 2022,
+    "land": "Deutschland",
+    "wert": 1.46
+  },
+  {
+    "jahr": 2023,
+    "land": "Deutschland",
+    "wert": 1.39
+  },
+  {
+    "jahr": 2024,
+    "land": "Deutschland",
+    "wert": 1.36
+  },
+  {
+    "jahr": 2000,
+    "land": "Ungarn",
+    "wert": 1.32
+  },
+  {
+    "jahr": 2001,
+    "land": "Ungarn",
+    "wert": 1.31
+  },
+  {
+    "jahr": 2002,
+    "land": "Ungarn",
+    "wert": 1.3
+  },
+  {
+    "jahr": 2003,
+    "land": "Ungarn",
+    "wert": 1.27
+  },
+  {
+    "jahr": 2004,
+    "land": "Ungarn",
+    "wert": 1.28
+  },
+  {
+    "jahr": 2005,
+    "land": "Ungarn",
+    "wert": 1.31
+  },
+  {
+    "jahr": 2006,
+    "land": "Ungarn",
+    "wert": 1.34
+  },
+  {
+    "jahr": 2007,
+    "land": "Ungarn",
+    "wert": 1.32
+  },
+  {
+    "jahr": 2008,
+    "land": "Ungarn",
+    "wert": 1.35
+  },
+  {
+    "jahr": 2009,
+    "land": "Ungarn",
+    "wert": 1.32
+  },
+  {
+    "jahr": 2010,
+    "land": "Ungarn",
+    "wert": 1.25
+  },
+  {
+    "jahr": 2011,
+    "land": "Ungarn",
+    "wert": 1.23
+  },
+  {
+    "jahr": 2012,
+    "land": "Ungarn",
+    "wert": 1.34
+  },
+  {
+    "jahr": 2013,
+    "land": "Ungarn",
+    "wert": 1.36
+  },
+  {
+    "jahr": 2014,
+    "land": "Ungarn",
+    "wert": 1.45
+  },
+  {
+    "jahr": 2015,
+    "land": "Ungarn",
+    "wert": 1.46
+  },
+  {
+    "jahr": 2016,
+    "land": "Ungarn",
+    "wert": 1.55
+  },
+  {
+    "jahr": 2017,
+    "land": "Ungarn",
+    "wert": 1.56
+  },
+  {
+    "jahr": 2018,
+    "land": "Ungarn",
+    "wert": 1.57
+  },
+  {
+    "jahr": 2019,
+    "land": "Ungarn",
+    "wert": 1.58
+  },
+  {
+    "jahr": 2020,
+    "land": "Ungarn",
+    "wert": 1.61
+  },
+  {
+    "jahr": 2021,
+    "land": "Ungarn",
+    "wert": 1.63
+  },
+  {
+    "jahr": 2022,
+    "land": "Ungarn",
+    "wert": 1.57
+  },
+  {
+    "jahr": 2023,
+    "land": "Ungarn",
+    "wert": 1.55
+  },
+  {
+    "jahr": 2024,
+    "land": "Ungarn",
+    "wert": 1.41
+  }
 ]

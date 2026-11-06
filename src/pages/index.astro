@@ -11,6 +11,9 @@ const artikel = Object.entries(dateien)
   }))
   .sort((a, b) => +new Date(b.datum) - +new Date(a.datum));
 
+const formatiere = (d: string) =>
+  new Date(d).toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+
 const kategorien = ['Familie', 'Wirtschaft', 'Diplomatie'];
 ---
 
@@ -33,6 +36,7 @@ const kategorien = ['Familie', 'Wirtschaft', 'Diplomatie'];
           <li class={`kat-${a.kategorie.toLowerCase()}`}>
             <a href={url(`artikel/${a.slug}/`)}>
               <span class="kategorie">{a.kategorie}</span>
+              <time class="datum" datetime={new Date(a.datum).toISOString().slice(0, 10)}>{formatiere(a.datum)}</time>
               <h3>{a.titel}</h3>
               <p>{a.beschreibung}</p>
             </a>
@@ -89,6 +93,16 @@ const kategorien = ['Familie', 'Wirtschaft', 'Diplomatie'];
     display: block;
     padding: 1.1rem 1.25rem;
     text-decoration: none;
+  }
+  .liste .datum {
+    margin-left: 0.6rem;
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .liste .datum::before {
+    content: '·';
+    margin-right: 0.6rem;
   }
   .liste h3 {
     margin: 0.25rem 0 0.3rem;
